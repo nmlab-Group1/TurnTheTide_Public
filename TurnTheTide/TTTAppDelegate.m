@@ -13,7 +13,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    return YES;
+/*    self.window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    self.window.
+*/
+ return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

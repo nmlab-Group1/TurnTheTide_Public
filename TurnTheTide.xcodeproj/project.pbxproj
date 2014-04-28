@@ -21,6 +21,12 @@
 		DB29842818FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
 		DB29843018FD2AAD008BF30D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DB29842E18FD2AAD008BF30D /* InfoPlist.strings */; };
 		DB29843218FD2AAD008BF30D /* TurnTheTideTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29843118FD2AAD008BF30D /* TurnTheTideTests.m */; };
+		DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496CA190D5569000FBFA4 /* RoomViewController.m */; };
+		DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496CD190D5589000FBFA4 /* TutorialViewController.m */; };
+		DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496D0190D55A3000FBFA4 /* AchievementViewController.m */; };
+		DB6496D4190D55C2000FBFA4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496D3190D55C2000FBFA4 /* SettingsViewController.m */; };
+		DB6496D7190D55D5000FBFA4 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496D6190D55D5000FBFA4 /* AboutViewController.m */; };
+		DB7A121A190C02E300119A7B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7A1219190C02E300119A7B /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,18 @@
 		DB29842D18FD2AAD008BF30D /* TurnTheTideTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurnTheTideTests-Info.plist"; sourceTree = "<group>"; };
 		DB29842F18FD2AAD008BF30D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DB29843118FD2AAD008BF30D /* TurnTheTideTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TurnTheTideTests.m; sourceTree = "<group>"; };
+		DB6496C9190D5569000FBFA4 /* RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
+		DB6496CA190D5569000FBFA4 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
+		DB6496CC190D5589000FBFA4 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		DB6496CD190D5589000FBFA4 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		DB6496CF190D55A3000FBFA4 /* AchievementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementViewController.h; sourceTree = "<group>"; };
+		DB6496D0190D55A3000FBFA4 /* AchievementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementViewController.m; sourceTree = "<group>"; };
+		DB6496D2190D55C2000FBFA4 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		DB6496D3190D55C2000FBFA4 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		DB6496D5190D55D5000FBFA4 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		DB6496D6190D55D5000FBFA4 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		DB7A1218190C02E300119A7B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		DB7A1219190C02E300119A7B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				DB29841818FD2AAD008BF30D /* Main.storyboard */,
-				DB29841B18FD2AAD008BF30D /* NameViewController.h */,
-				DB29841C18FD2AAD008BF30D /* NameViewController.m */,
+				DB7A121B190C02F000119A7B /* ViewController */,
 				DB29841E18FD2AAD008BF30D /* Images.xcassets */,
 				DB29840D18FD2AAD008BF30D /* Supporting Files */,
 			);
@@ -150,6 +167,27 @@
 				DB29842E18FD2AAD008BF30D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB7A121B190C02F000119A7B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DB29841B18FD2AAD008BF30D /* NameViewController.h */,
+				DB29841C18FD2AAD008BF30D /* NameViewController.m */,
+				DB7A1218190C02E300119A7B /* MainViewController.h */,
+				DB7A1219190C02E300119A7B /* MainViewController.m */,
+				DB6496C9190D5569000FBFA4 /* RoomViewController.h */,
+				DB6496CA190D5569000FBFA4 /* RoomViewController.m */,
+				DB6496CC190D5589000FBFA4 /* TutorialViewController.h */,
+				DB6496CD190D5589000FBFA4 /* TutorialViewController.m */,
+				DB6496CF190D55A3000FBFA4 /* AchievementViewController.h */,
+				DB6496D0190D55A3000FBFA4 /* AchievementViewController.m */,
+				DB6496D2190D55C2000FBFA4 /* SettingsViewController.h */,
+				DB6496D3190D55C2000FBFA4 /* SettingsViewController.m */,
+				DB6496D5190D55D5000FBFA4 /* AboutViewController.h */,
+				DB6496D6190D55D5000FBFA4 /* AboutViewController.m */,
+			);
+			name = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,9 +288,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB6496D7190D55D5000FBFA4 /* AboutViewController.m in Sources */,
+				DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */,
 				DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */,
+				DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */,
+				DB6496D4190D55C2000FBFA4 /* SettingsViewController.m in Sources */,
+				DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */,
 				DB29841318FD2AAD008BF30D /* main.m in Sources */,
 				DB29841718FD2AAD008BF30D /* TTTAppDelegate.m in Sources */,
+				DB7A121A190C02E300119A7B /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

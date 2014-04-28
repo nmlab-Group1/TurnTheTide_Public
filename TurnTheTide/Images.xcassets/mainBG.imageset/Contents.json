@@ -1,0 +1,18 @@
+{
+  "images" : [
+    {
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "filename" : "mainBG_1.png"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "filename" : "mainBG_2.png"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
