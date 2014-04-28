@@ -1,0 +1,520 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840618FD2AAD008BF30D /* Foundation.framework */; };
+		DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840818FD2AAD008BF30D /* CoreGraphics.framework */; };
+		DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
+		DB29841118FD2AAD008BF30D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DB29840F18FD2AAD008BF30D /* InfoPlist.strings */; };
+		DB29841318FD2AAD008BF30D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29841218FD2AAD008BF30D /* main.m */; };
+		DB29841718FD2AAD008BF30D /* TTTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29841618FD2AAD008BF30D /* TTTAppDelegate.m */; };
+		DB29841A18FD2AAD008BF30D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB29841818FD2AAD008BF30D /* Main.storyboard */; };
+		DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29841C18FD2AAD008BF30D /* NameViewController.m */; };
+		DB29841F18FD2AAD008BF30D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB29841E18FD2AAD008BF30D /* Images.xcassets */; };
+		DB29842618FD2AAD008BF30D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29842518FD2AAD008BF30D /* XCTest.framework */; };
+		DB29842718FD2AAD008BF30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840618FD2AAD008BF30D /* Foundation.framework */; };
+		DB29842818FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
+		DB29843018FD2AAD008BF30D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DB29842E18FD2AAD008BF30D /* InfoPlist.strings */; };
+		DB29843218FD2AAD008BF30D /* TurnTheTideTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB29843118FD2AAD008BF30D /* TurnTheTideTests.m */; };
+		DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496CA190D5569000FBFA4 /* RoomViewController.m */; };
+		DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496CD190D5589000FBFA4 /* TutorialViewController.m */; };
+		DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496D0190D55A3000FBFA4 /* AchievementViewController.m */; };
+		DB6496D4190D55C2000FBFA4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496D3190D55C2000FBFA4 /* SettingsViewController.m */; };
+		DB6496D7190D55D5000FBFA4 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6496D6190D55D5000FBFA4 /* AboutViewController.m */; };
+		DB7A121A190C02E300119A7B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7A1219190C02E300119A7B /* MainViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DB29842918FD2AAD008BF30D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB2983FB18FD2AAD008BF30D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB29840218FD2AAD008BF30D;
+			remoteInfo = TurnTheTide;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DB29840318FD2AAD008BF30D /* TurnTheTide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnTheTide.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB29840618FD2AAD008BF30D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DB29840818FD2AAD008BF30D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DB29840A18FD2AAD008BF30D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DB29840E18FD2AAD008BF30D /* TurnTheTide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurnTheTide-Info.plist"; sourceTree = "<group>"; };
+		DB29841018FD2AAD008BF30D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DB29841218FD2AAD008BF30D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DB29841418FD2AAD008BF30D /* TurnTheTide-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TurnTheTide-Prefix.pch"; sourceTree = "<group>"; };
+		DB29841518FD2AAD008BF30D /* TTTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTTAppDelegate.h; sourceTree = "<group>"; };
+		DB29841618FD2AAD008BF30D /* TTTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTTAppDelegate.m; sourceTree = "<group>"; };
+		DB29841918FD2AAD008BF30D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB29841B18FD2AAD008BF30D /* NameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NameViewController.h; sourceTree = "<group>"; };
+		DB29841C18FD2AAD008BF30D /* NameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NameViewController.m; sourceTree = "<group>"; };
+		DB29841E18FD2AAD008BF30D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DB29842418FD2AAD008BF30D /* TurnTheTideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurnTheTideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB29842518FD2AAD008BF30D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DB29842D18FD2AAD008BF30D /* TurnTheTideTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurnTheTideTests-Info.plist"; sourceTree = "<group>"; };
+		DB29842F18FD2AAD008BF30D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DB29843118FD2AAD008BF30D /* TurnTheTideTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TurnTheTideTests.m; sourceTree = "<group>"; };
+		DB6496C9190D5569000FBFA4 /* RoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomViewController.h; sourceTree = "<group>"; };
+		DB6496CA190D5569000FBFA4 /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
+		DB6496CC190D5589000FBFA4 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		DB6496CD190D5589000FBFA4 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		DB6496CF190D55A3000FBFA4 /* AchievementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementViewController.h; sourceTree = "<group>"; };
+		DB6496D0190D55A3000FBFA4 /* AchievementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AchievementViewController.m; sourceTree = "<group>"; };
+		DB6496D2190D55C2000FBFA4 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		DB6496D3190D55C2000FBFA4 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		DB6496D5190D55D5000FBFA4 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		DB6496D6190D55D5000FBFA4 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		DB7A1218190C02E300119A7B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		DB7A1219190C02E300119A7B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB29840018FD2AAD008BF30D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */,
+				DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */,
+				DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB29842118FD2AAD008BF30D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB29842618FD2AAD008BF30D /* XCTest.framework in Frameworks */,
+				DB29842818FD2AAD008BF30D /* UIKit.framework in Frameworks */,
+				DB29842718FD2AAD008BF30D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DB2983FA18FD2AAD008BF30D = {
+			isa = PBXGroup;
+			children = (
+				DB29840C18FD2AAD008BF30D /* TurnTheTide */,
+				DB29842B18FD2AAD008BF30D /* TurnTheTideTests */,
+				DB29840518FD2AAD008BF30D /* Frameworks */,
+				DB29840418FD2AAD008BF30D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB29840418FD2AAD008BF30D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB29840318FD2AAD008BF30D /* TurnTheTide.app */,
+				DB29842418FD2AAD008BF30D /* TurnTheTideTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB29840518FD2AAD008BF30D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB29840618FD2AAD008BF30D /* Foundation.framework */,
+				DB29840818FD2AAD008BF30D /* CoreGraphics.framework */,
+				DB29840A18FD2AAD008BF30D /* UIKit.framework */,
+				DB29842518FD2AAD008BF30D /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB29840C18FD2AAD008BF30D /* TurnTheTide */ = {
+			isa = PBXGroup;
+			children = (
+				DB29841818FD2AAD008BF30D /* Main.storyboard */,
+				DB7A121B190C02F000119A7B /* ViewController */,
+				DB29841E18FD2AAD008BF30D /* Images.xcassets */,
+				DB29840D18FD2AAD008BF30D /* Supporting Files */,
+			);
+			path = TurnTheTide;
+			sourceTree = "<group>";
+		};
+		DB29840D18FD2AAD008BF30D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB29841518FD2AAD008BF30D /* TTTAppDelegate.h */,
+				DB29841618FD2AAD008BF30D /* TTTAppDelegate.m */,
+				DB29840E18FD2AAD008BF30D /* TurnTheTide-Info.plist */,
+				DB29840F18FD2AAD008BF30D /* InfoPlist.strings */,
+				DB29841218FD2AAD008BF30D /* main.m */,
+				DB29841418FD2AAD008BF30D /* TurnTheTide-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB29842B18FD2AAD008BF30D /* TurnTheTideTests */ = {
+			isa = PBXGroup;
+			children = (
+				DB29843118FD2AAD008BF30D /* TurnTheTideTests.m */,
+				DB29842C18FD2AAD008BF30D /* Supporting Files */,
+			);
+			path = TurnTheTideTests;
+			sourceTree = "<group>";
+		};
+		DB29842C18FD2AAD008BF30D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB29842D18FD2AAD008BF30D /* TurnTheTideTests-Info.plist */,
+				DB29842E18FD2AAD008BF30D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB7A121B190C02F000119A7B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DB29841B18FD2AAD008BF30D /* NameViewController.h */,
+				DB29841C18FD2AAD008BF30D /* NameViewController.m */,
+				DB7A1218190C02E300119A7B /* MainViewController.h */,
+				DB7A1219190C02E300119A7B /* MainViewController.m */,
+				DB6496C9190D5569000FBFA4 /* RoomViewController.h */,
+				DB6496CA190D5569000FBFA4 /* RoomViewController.m */,
+				DB6496CC190D5589000FBFA4 /* TutorialViewController.h */,
+				DB6496CD190D5589000FBFA4 /* TutorialViewController.m */,
+				DB6496CF190D55A3000FBFA4 /* AchievementViewController.h */,
+				DB6496D0190D55A3000FBFA4 /* AchievementViewController.m */,
+				DB6496D2190D55C2000FBFA4 /* SettingsViewController.h */,
+				DB6496D3190D55C2000FBFA4 /* SettingsViewController.m */,
+				DB6496D5190D55D5000FBFA4 /* AboutViewController.h */,
+				DB6496D6190D55D5000FBFA4 /* AboutViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB29840218FD2AAD008BF30D /* TurnTheTide */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB29843518FD2AAD008BF30D /* Build configuration list for PBXNativeTarget "TurnTheTide" */;
+			buildPhases = (
+				DB2983FF18FD2AAD008BF30D /* Sources */,
+				DB29840018FD2AAD008BF30D /* Frameworks */,
+				DB29840118FD2AAD008BF30D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TurnTheTide;
+			productName = TurnTheTide;
+			productReference = DB29840318FD2AAD008BF30D /* TurnTheTide.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DB29842318FD2AAD008BF30D /* TurnTheTideTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB29843818FD2AAD008BF30D /* Build configuration list for PBXNativeTarget "TurnTheTideTests" */;
+			buildPhases = (
+				DB29842018FD2AAD008BF30D /* Sources */,
+				DB29842118FD2AAD008BF30D /* Frameworks */,
+				DB29842218FD2AAD008BF30D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB29842A18FD2AAD008BF30D /* PBXTargetDependency */,
+			);
+			name = TurnTheTideTests;
+			productName = TurnTheTideTests;
+			productReference = DB29842418FD2AAD008BF30D /* TurnTheTideTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB2983FB18FD2AAD008BF30D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TTT;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = nmlab_Team1;
+				TargetAttributes = {
+					DB29842318FD2AAD008BF30D = {
+						TestTargetID = DB29840218FD2AAD008BF30D;
+					};
+				};
+			};
+			buildConfigurationList = DB2983FE18FD2AAD008BF30D /* Build configuration list for PBXProject "TurnTheTide" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DB2983FA18FD2AAD008BF30D;
+			productRefGroup = DB29840418FD2AAD008BF30D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB29840218FD2AAD008BF30D /* TurnTheTide */,
+				DB29842318FD2AAD008BF30D /* TurnTheTideTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB29840118FD2AAD008BF30D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB29841F18FD2AAD008BF30D /* Images.xcassets in Resources */,
+				DB29841118FD2AAD008BF30D /* InfoPlist.strings in Resources */,
+				DB29841A18FD2AAD008BF30D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB29842218FD2AAD008BF30D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB29843018FD2AAD008BF30D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB2983FF18FD2AAD008BF30D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB6496D7190D55D5000FBFA4 /* AboutViewController.m in Sources */,
+				DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */,
+				DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */,
+				DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */,
+				DB6496D4190D55C2000FBFA4 /* SettingsViewController.m in Sources */,
+				DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */,
+				DB29841318FD2AAD008BF30D /* main.m in Sources */,
+				DB29841718FD2AAD008BF30D /* TTTAppDelegate.m in Sources */,
+				DB7A121A190C02E300119A7B /* MainViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB29842018FD2AAD008BF30D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB29843218FD2AAD008BF30D /* TurnTheTideTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DB29842A18FD2AAD008BF30D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB29840218FD2AAD008BF30D /* TurnTheTide */;
+			targetProxy = DB29842918FD2AAD008BF30D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DB29840F18FD2AAD008BF30D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB29841018FD2AAD008BF30D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DB29841818FD2AAD008BF30D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB29841918FD2AAD008BF30D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DB29842E18FD2AAD008BF30D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB29842F18FD2AAD008BF30D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DB29843318FD2AAD008BF30D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		DB29843418FD2AAD008BF30D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DB29843618FD2AAD008BF30D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TurnTheTide/TurnTheTide-Prefix.pch";
+				INFOPLIST_FILE = "TurnTheTide/TurnTheTide-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DB29843718FD2AAD008BF30D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TurnTheTide/TurnTheTide-Prefix.pch";
+				INFOPLIST_FILE = "TurnTheTide/TurnTheTide-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		DB29843918FD2AAD008BF30D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TurnTheTide.app/TurnTheTide";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TurnTheTide/TurnTheTide-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TurnTheTideTests/TurnTheTideTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		DB29843A18FD2AAD008BF30D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TurnTheTide.app/TurnTheTide";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TurnTheTide/TurnTheTide-Prefix.pch";
+				INFOPLIST_FILE = "TurnTheTideTests/TurnTheTideTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB2983FE18FD2AAD008BF30D /* Build configuration list for PBXProject "TurnTheTide" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB29843318FD2AAD008BF30D /* Debug */,
+				DB29843418FD2AAD008BF30D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB29843518FD2AAD008BF30D /* Build configuration list for PBXNativeTarget "TurnTheTide" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB29843618FD2AAD008BF30D /* Debug */,
+				DB29843718FD2AAD008BF30D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB29843818FD2AAD008BF30D /* Build configuration list for PBXNativeTarget "TurnTheTideTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB29843918FD2AAD008BF30D /* Debug */,
+				DB29843A18FD2AAD008BF30D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB2983FB18FD2AAD008BF30D /* Project object */;
+}
