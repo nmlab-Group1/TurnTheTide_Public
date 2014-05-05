@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8840F84E1917FD1800EBC3D4 /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F84D1917FD1800EBC3D4 /* Firebase.framework */; };
+		8840F8501917FD7B00EBC3D4 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F84F1917FD7B00EBC3D4 /* libicucore.dylib */; };
+		8840F8521917FD8300EBC3D4 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F8511917FD8300EBC3D4 /* libc++.dylib */; };
+		8840F8541917FD8900EBC3D4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F8531917FD8900EBC3D4 /* CFNetwork.framework */; };
+		8840F8561917FD8F00EBC3D4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F8551917FD8F00EBC3D4 /* Security.framework */; };
+		8840F8581917FD9500EBC3D4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F8571917FD9500EBC3D4 /* SystemConfiguration.framework */; };
+		8840F85A1917FE7100EBC3D4 /* RoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8840F8591917FE7100EBC3D4 /* RoomTableViewCell.xib */; };
+		8840F85D1918000800EBC3D4 /* RoomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */; };
 		DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840618FD2AAD008BF30D /* Foundation.framework */; };
 		DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840818FD2AAD008BF30D /* CoreGraphics.framework */; };
 		DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
@@ -40,6 +48,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8840F84D1917FD1800EBC3D4 /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Firebase.framework; sourceTree = "<group>"; };
+		8840F84F1917FD7B00EBC3D4 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		8840F8511917FD8300EBC3D4 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		8840F8531917FD8900EBC3D4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		8840F8551917FD8F00EBC3D4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8840F8571917FD9500EBC3D4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8840F8591917FE7100EBC3D4 /* RoomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoomTableViewCell.xib; sourceTree = "<group>"; };
+		8840F85B1918000800EBC3D4 /* RoomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomTableViewCell.h; sourceTree = "<group>"; };
+		8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomTableViewCell.m; sourceTree = "<group>"; };
 		DB29840318FD2AAD008BF30D /* TurnTheTide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnTheTide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB29840618FD2AAD008BF30D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DB29840818FD2AAD008BF30D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -78,9 +95,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8840F8581917FD9500EBC3D4 /* SystemConfiguration.framework in Frameworks */,
+				8840F8561917FD8F00EBC3D4 /* Security.framework in Frameworks */,
+				8840F8541917FD8900EBC3D4 /* CFNetwork.framework in Frameworks */,
+				8840F8521917FD8300EBC3D4 /* libc++.dylib in Frameworks */,
+				8840F8501917FD7B00EBC3D4 /* libicucore.dylib in Frameworks */,
 				DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */,
 				DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */,
 				DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */,
+				8840F84E1917FD1800EBC3D4 /* Firebase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +142,12 @@
 		DB29840518FD2AAD008BF30D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8840F8571917FD9500EBC3D4 /* SystemConfiguration.framework */,
+				8840F8551917FD8F00EBC3D4 /* Security.framework */,
+				8840F8531917FD8900EBC3D4 /* CFNetwork.framework */,
+				8840F8511917FD8300EBC3D4 /* libc++.dylib */,
+				8840F84F1917FD7B00EBC3D4 /* libicucore.dylib */,
+				8840F84D1917FD1800EBC3D4 /* Firebase.framework */,
 				DB29840618FD2AAD008BF30D /* Foundation.framework */,
 				DB29840818FD2AAD008BF30D /* CoreGraphics.framework */,
 				DB29840A18FD2AAD008BF30D /* UIKit.framework */,
@@ -141,6 +170,9 @@
 		DB29840D18FD2AAD008BF30D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8840F8591917FE7100EBC3D4 /* RoomTableViewCell.xib */,
+				8840F85B1918000800EBC3D4 /* RoomTableViewCell.h */,
+				8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */,
 				DB29841518FD2AAD008BF30D /* TTTAppDelegate.h */,
 				DB29841618FD2AAD008BF30D /* TTTAppDelegate.m */,
 				DB29840E18FD2AAD008BF30D /* TurnTheTide-Info.plist */,
@@ -269,6 +301,7 @@
 			files = (
 				DB29841F18FD2AAD008BF30D /* Images.xcassets in Resources */,
 				DB29841118FD2AAD008BF30D /* InfoPlist.strings in Resources */,
+				8840F85A1917FE7100EBC3D4 /* RoomTableViewCell.xib in Resources */,
 				DB29841A18FD2AAD008BF30D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +325,7 @@
 				DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */,
 				DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */,
 				DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */,
+				8840F85D1918000800EBC3D4 /* RoomTableViewCell.m in Sources */,
 				DB6496D4190D55C2000FBFA4 /* SettingsViewController.m in Sources */,
 				DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */,
 				DB29841318FD2AAD008BF30D /* main.m in Sources */,
@@ -423,9 +457,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TurnTheTide/TurnTheTide-Prefix.pch";
 				INFOPLIST_FILE = "TurnTheTide/TurnTheTide-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -436,9 +475,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TurnTheTide/TurnTheTide-Prefix.pch";
 				INFOPLIST_FILE = "TurnTheTide/TurnTheTide-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

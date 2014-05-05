@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) NSString* name;
 
 @end
 
@@ -46,6 +47,7 @@
         returnValue = [self registerName:[sender text]];
         if(returnValue == 0)
         {
+            self.name = [sender text];
             [self performSegueWithIdentifier:@"pushToMain" sender:self];
         }
         else if (returnValue == 1)
@@ -60,6 +62,15 @@
 - (int)registerName:(NSString *)nameString
 {
     return 0;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"pushToMain"])
+    {
+        MainViewController* controller = (MainViewController*)segue.destinationViewController;
+        controller.name = self.name;
+    }
 }
 
 
