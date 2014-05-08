@@ -11,6 +11,7 @@
 @interface RoomTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *playerCountImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *needCountImageView;
 @property (weak, nonatomic) IBOutlet UILabel *ownerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *modeLabel;
 

@@ -15,6 +15,7 @@
 		8840F8581917FD9500EBC3D4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8840F8571917FD9500EBC3D4 /* SystemConfiguration.framework */; };
 		8840F85A1917FE7100EBC3D4 /* RoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8840F8591917FE7100EBC3D4 /* RoomTableViewCell.xib */; };
 		8840F85D1918000800EBC3D4 /* RoomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */; };
+		88C8E732191A654200DA3273 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8E731191A654200DA3273 /* GameViewController.m */; };
 		DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840618FD2AAD008BF30D /* Foundation.framework */; };
 		DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840818FD2AAD008BF30D /* CoreGraphics.framework */; };
 		DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
@@ -57,6 +58,8 @@
 		8840F8591917FE7100EBC3D4 /* RoomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoomTableViewCell.xib; sourceTree = "<group>"; };
 		8840F85B1918000800EBC3D4 /* RoomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomTableViewCell.h; sourceTree = "<group>"; };
 		8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomTableViewCell.m; sourceTree = "<group>"; };
+		88C8E730191A654200DA3273 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		88C8E731191A654200DA3273 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		DB29840318FD2AAD008BF30D /* TurnTheTide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnTheTide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB29840618FD2AAD008BF30D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DB29840818FD2AAD008BF30D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -210,6 +213,8 @@
 				DB7A1219190C02E300119A7B /* MainViewController.m */,
 				DB6496C9190D5569000FBFA4 /* RoomViewController.h */,
 				DB6496CA190D5569000FBFA4 /* RoomViewController.m */,
+				88C8E730191A654200DA3273 /* GameViewController.h */,
+				88C8E731191A654200DA3273 /* GameViewController.m */,
 				DB6496CC190D5589000FBFA4 /* TutorialViewController.h */,
 				DB6496CD190D5589000FBFA4 /* TutorialViewController.m */,
 				DB6496CF190D55A3000FBFA4 /* AchievementViewController.h */,
@@ -322,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB6496D7190D55D5000FBFA4 /* AboutViewController.m in Sources */,
+				88C8E732191A654200DA3273 /* GameViewController.m in Sources */,
 				DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */,
 				DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */,
 				DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */,

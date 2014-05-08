@@ -154,7 +154,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jIV-2j-H7o">
-                                <rect key="frame" x="464" y="64" width="540" height="684"/>
+                                <rect key="frame" x="464" y="20" width="540" height="728"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -294,6 +294,7 @@
                         <outlet property="nameLabel" destination="y12-HC-tTa" id="R69-y7-se2"/>
                         <outlet property="playerCountLabel" destination="296-ZG-W85" id="kam-KB-hsV"/>
                         <outlet property="roomsTableView" destination="jIV-2j-H7o" id="236-TD-PQd"/>
+                        <segue destination="x1c-IT-Fhw" kind="push" identifier="roomToGame" id="9uZ-tO-vzS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h38-mq-rNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -320,6 +321,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bT3-YS-yQY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3174" y="-1059"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="mC0-x5-qgG">
+            <objects>
+                <viewController id="x1c-IT-Fhw" customClass="GameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HQp-83-Skn"/>
+                        <viewControllerLayoutGuide type="bottom" id="4EJ-iu-AhV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fwd-dq-XNs">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QYd-NZ-UL1"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bWT-kc-rp0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1999" y="-1988"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="1Ey-5o-dCJ">
