@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    GlobalData * globalData = [GlobalData getInstance];
+    [globalData.BGM_Main play];
 }
 
 - (void)didReceiveMemoryWarning

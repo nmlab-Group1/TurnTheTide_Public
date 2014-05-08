@@ -16,6 +16,10 @@
 		8840F85A1917FE7100EBC3D4 /* RoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8840F8591917FE7100EBC3D4 /* RoomTableViewCell.xib */; };
 		8840F85D1918000800EBC3D4 /* RoomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */; };
 		88C8E732191A654200DA3273 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8E731191A654200DA3273 /* GameViewController.m */; };
+		DB199D0D191BEE5100F7ADCA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB199D0C191BEE5100F7ADCA /* AVFoundation.framework */; };
+		DB199D12191BEF2B00F7ADCA /* GlobalData.m in Sources */ = {isa = PBXBuildFile; fileRef = DB199D10191BEF2B00F7ADCA /* GlobalData.m */; };
+		DB199D17191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB199D15191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 */; };
+		DB199D18191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB199D16191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 */; };
 		DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840618FD2AAD008BF30D /* Foundation.framework */; };
 		DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840818FD2AAD008BF30D /* CoreGraphics.framework */; };
 		DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
@@ -60,6 +64,12 @@
 		8840F85C1918000800EBC3D4 /* RoomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomTableViewCell.m; sourceTree = "<group>"; };
 		88C8E730191A654200DA3273 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		88C8E731191A654200DA3273 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		DB199D0C191BEE5100F7ADCA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DB199D0F191BEF2B00F7ADCA /* GlobalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalData.h; sourceTree = "<group>"; };
+		DB199D10191BEF2B00F7ADCA /* GlobalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalData.m; sourceTree = "<group>"; };
+		DB199D11191BEF2B00F7ADCA /* TTTParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTParameters.h; sourceTree = "<group>"; };
+		DB199D15191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM_Game_MorningWalk.mp3; sourceTree = "<group>"; };
+		DB199D16191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM_Main_DaysAreLong.mp3; sourceTree = "<group>"; };
 		DB29840318FD2AAD008BF30D /* TurnTheTide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnTheTide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB29840618FD2AAD008BF30D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DB29840818FD2AAD008BF30D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,7 +83,7 @@
 		DB29841918FD2AAD008BF30D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB29841B18FD2AAD008BF30D /* NameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NameViewController.h; sourceTree = "<group>"; };
 		DB29841C18FD2AAD008BF30D /* NameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NameViewController.m; sourceTree = "<group>"; };
-		DB29841E18FD2AAD008BF30D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DB29841E18FD2AAD008BF30D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TurnTheTide/Images.xcassets; sourceTree = "<group>"; };
 		DB29842418FD2AAD008BF30D /* TurnTheTideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurnTheTideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB29842518FD2AAD008BF30D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DB29842D18FD2AAD008BF30D /* TurnTheTideTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TurnTheTideTests-Info.plist"; sourceTree = "<group>"; };
@@ -100,6 +110,7 @@
 			files = (
 				8840F8581917FD9500EBC3D4 /* SystemConfiguration.framework in Frameworks */,
 				8840F8561917FD8F00EBC3D4 /* Security.framework in Frameworks */,
+				DB199D0D191BEE5100F7ADCA /* AVFoundation.framework in Frameworks */,
 				8840F8541917FD8900EBC3D4 /* CFNetwork.framework in Frameworks */,
 				8840F8521917FD8300EBC3D4 /* libc++.dylib in Frameworks */,
 				8840F8501917FD7B00EBC3D4 /* libicucore.dylib in Frameworks */,
@@ -123,10 +134,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB199D0E191BEE8A00F7ADCA /* OtherClasses */ = {
+			isa = PBXGroup;
+			children = (
+				DB199D0F191BEF2B00F7ADCA /* GlobalData.h */,
+				DB199D10191BEF2B00F7ADCA /* GlobalData.m */,
+			);
+			name = OtherClasses;
+			sourceTree = "<group>";
+		};
+		DB199D14191BF52900F7ADCA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB199D15191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 */,
+				DB199D16191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DB199D19191BFBC900F7ADCA /* TTTClasses */ = {
+			isa = PBXGroup;
+			children = (
+				DB199D11191BEF2B00F7ADCA /* TTTParameters.h */,
+			);
+			name = TTTClasses;
+			sourceTree = "<group>";
+		};
 		DB2983FA18FD2AAD008BF30D = {
 			isa = PBXGroup;
 			children = (
 				DB29840C18FD2AAD008BF30D /* TurnTheTide */,
+				DB29841E18FD2AAD008BF30D /* Images.xcassets */,
 				DB29842B18FD2AAD008BF30D /* TurnTheTideTests */,
 				DB29840518FD2AAD008BF30D /* Frameworks */,
 				DB29840418FD2AAD008BF30D /* Products */,
@@ -145,6 +183,7 @@
 		DB29840518FD2AAD008BF30D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB199D0C191BEE5100F7ADCA /* AVFoundation.framework */,
 				8840F8571917FD9500EBC3D4 /* SystemConfiguration.framework */,
 				8840F8551917FD8F00EBC3D4 /* Security.framework */,
 				8840F8531917FD8900EBC3D4 /* CFNetwork.framework */,
@@ -164,7 +203,9 @@
 			children = (
 				DB29841818FD2AAD008BF30D /* Main.storyboard */,
 				DB7A121B190C02F000119A7B /* ViewController */,
-				DB29841E18FD2AAD008BF30D /* Images.xcassets */,
+				DB199D14191BF52900F7ADCA /* Resources */,
+				DB199D0E191BEE8A00F7ADCA /* OtherClasses */,
+				DB199D19191BFBC900F7ADCA /* TTTClasses */,
 				DB29840D18FD2AAD008BF30D /* Supporting Files */,
 			);
 			path = TurnTheTide;
@@ -304,8 +345,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB199D18191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 in Resources */,
 				DB29841F18FD2AAD008BF30D /* Images.xcassets in Resources */,
 				DB29841118FD2AAD008BF30D /* InfoPlist.strings in Resources */,
+				DB199D17191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 in Resources */,
 				8840F85A1917FE7100EBC3D4 /* RoomTableViewCell.xib in Resources */,
 				DB29841A18FD2AAD008BF30D /* Main.storyboard in Resources */,
 			);
@@ -332,6 +375,7 @@
 				DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */,
 				DB6496CB190D556A000FBFA4 /* RoomViewController.m in Sources */,
 				8840F85D1918000800EBC3D4 /* RoomTableViewCell.m in Sources */,
+				DB199D12191BEF2B00F7ADCA /* GlobalData.m in Sources */,
 				DB6496D4190D55C2000FBFA4 /* SettingsViewController.m in Sources */,
 				DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */,
 				DB29841318FD2AAD008BF30D /* main.m in Sources */,

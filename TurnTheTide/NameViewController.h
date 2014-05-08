@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GlobalData.h"
 
 @interface NameViewController : UIViewController
 

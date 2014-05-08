@@ -18,7 +18,9 @@
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     self.window.
 */
- return YES;
+    GlobalData * globalData = [GlobalData getInstance];
+    [globalData initAllMusic];
+    return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

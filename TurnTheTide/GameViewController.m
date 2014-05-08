@@ -38,6 +38,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    GlobalData * globalData = [GlobalData getInstance];
+    [globalData.BGM_Main stop];
+    [globalData.BGM_Game play];
 }
 
 - (void)viewWillAppear:(BOOL)animated
