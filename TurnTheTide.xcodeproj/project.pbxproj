@@ -20,6 +20,8 @@
 		DB199D12191BEF2B00F7ADCA /* GlobalData.m in Sources */ = {isa = PBXBuildFile; fileRef = DB199D10191BEF2B00F7ADCA /* GlobalData.m */; };
 		DB199D17191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB199D15191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 */; };
 		DB199D18191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DB199D16191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 */; };
+		DB199D2C191E70E300F7ADCA /* TTTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB199D29191E70E300F7ADCA /* TTTPlayerView.m */; };
+		DB199D2D191E70E300F7ADCA /* TTTWeatherCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = DB199D2B191E70E300F7ADCA /* TTTWeatherCardView.m */; };
 		DB29840718FD2AAD008BF30D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840618FD2AAD008BF30D /* Foundation.framework */; };
 		DB29840918FD2AAD008BF30D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840818FD2AAD008BF30D /* CoreGraphics.framework */; };
 		DB29840B18FD2AAD008BF30D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB29840A18FD2AAD008BF30D /* UIKit.framework */; };
@@ -70,6 +72,10 @@
 		DB199D11191BEF2B00F7ADCA /* TTTParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTParameters.h; sourceTree = "<group>"; };
 		DB199D15191BF55D00F7ADCA /* BGM_Game_MorningWalk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM_Game_MorningWalk.mp3; sourceTree = "<group>"; };
 		DB199D16191BF55D00F7ADCA /* BGM_Main_DaysAreLong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM_Main_DaysAreLong.mp3; sourceTree = "<group>"; };
+		DB199D28191E70E300F7ADCA /* TTTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTPlayerView.h; sourceTree = "<group>"; };
+		DB199D29191E70E300F7ADCA /* TTTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTPlayerView.m; sourceTree = "<group>"; };
+		DB199D2A191E70E300F7ADCA /* TTTWeatherCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTWeatherCardView.h; sourceTree = "<group>"; };
+		DB199D2B191E70E300F7ADCA /* TTTWeatherCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTWeatherCardView.m; sourceTree = "<group>"; };
 		DB29840318FD2AAD008BF30D /* TurnTheTide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurnTheTide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB29840618FD2AAD008BF30D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DB29840818FD2AAD008BF30D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -163,6 +169,10 @@
 		DB199D21191D7D3000F7ADCA /* UIClasses */ = {
 			isa = PBXGroup;
 			children = (
+				DB199D2A191E70E300F7ADCA /* TTTWeatherCardView.h */,
+				DB199D2B191E70E300F7ADCA /* TTTWeatherCardView.m */,
+				DB199D28191E70E300F7ADCA /* TTTPlayerView.h */,
+				DB199D29191E70E300F7ADCA /* TTTPlayerView.m */,
 			);
 			name = UIClasses;
 			sourceTree = "<group>";
@@ -378,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB6496D7190D55D5000FBFA4 /* AboutViewController.m in Sources */,
+				DB199D2C191E70E300F7ADCA /* TTTPlayerView.m in Sources */,
 				88C8E732191A654200DA3273 /* GameViewController.m in Sources */,
 				DB6496D1190D55A3000FBFA4 /* AchievementViewController.m in Sources */,
 				DB29841D18FD2AAD008BF30D /* NameViewController.m in Sources */,
@@ -388,6 +399,7 @@
 				DB6496CE190D5589000FBFA4 /* TutorialViewController.m in Sources */,
 				DB29841318FD2AAD008BF30D /* main.m in Sources */,
 				DB29841718FD2AAD008BF30D /* TTTAppDelegate.m in Sources */,
+				DB199D2D191E70E300F7ADCA /* TTTWeatherCardView.m in Sources */,
 				DB7A121A190C02E300119A7B /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
