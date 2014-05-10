@@ -7,72 +7,15 @@
 //
 
 #import "NameViewController.h"
-#import "MainViewController.h"
 
 @interface NameViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) NSString* name;
+@property (strong, nonatomic) NSMutableArray* names;
 
 @end
 
 @implementation NameViewController
-- (IBAction)naviForward:(id)sender {
-}
-
-- (IBAction)DidEndOnExit:(UITextField *)sender {
-    NSString *trimmedName = [sender.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    int returnValue = 0;
-    if ( [trimmedName length] <= 0 )
-    {
-        UIAlertView *blankAlert = [[UIAlertView alloc]
-                                   initWithTitle:@"register error"
-                                   message:@"Please input your name to rigister" delegate:nil
-                                   cancelButtonTitle:@"OK"
-                                   otherButtonTitles:nil];
-        [blankAlert show];
-    }
-    else if ([trimmedName length] > 15)
-    {
-        UIAlertView *lengthAlert = [[UIAlertView alloc]
-                                   initWithTitle:@"register error"
-                                   message:@"The name should be less than 16 characters." delegate:nil
-                                   cancelButtonTitle:@"OK"
-                                   otherButtonTitles:nil];
-        [lengthAlert show];
-    }
-    else
-    {
-        returnValue = [self registerName:[sender text]];
-        if(returnValue == 0)
-        {
-            self.name = [sender text];
-            [self performSegueWithIdentifier:@"pushToMain" sender:self];
-        }
-        else if (returnValue == 1)
-        {
-            
-        }
-    }
-//    MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"mainVC" bundle:nil];
-//    [self.navigationController pushViewController: mainVC animated:YES];
-}
-
-- (int)registerName:(NSString *)nameString
-{
-    return 0;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"pushToMain"])
-    {
-        MainViewController* controller = (MainViewController*)segue.destinationViewController;
-        controller.name = self.name;
-    }
-}
-
 
 - (void)viewDidLoad
 {
@@ -80,10 +23,107 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.names = [[NSMutableArray alloc] init];
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults valueForKey:@"Name"])
+    {
+        NSLog(@"Saved name: %@", [defaults valueForKey:@"Name"]);
+        [self performSegueWithIdentifier:@"pushToMain" sender:self];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)naviForward:(id)sender {
+}
+
+- (IBAction)DidEndOnExit:(UITextField *)sender
+{
+    [sender resignFirstResponder];
+    
+    NSString *trimmedName = [sender.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if ( [trimmedName length] <= 0 )
+    {
+        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"register error" message:@"Please input your name to rigister" delegate:nil cancelButtonTitle:@"OK"  otherButtonTitles:nil];
+        [blankAlert show];
+    }
+    else if ([trimmedName length] > 15)
+    {
+        UIAlertView *lengthAlert = [[UIAlertView alloc] initWithTitle:@"register error" message:@"The name should be less than 16 characters." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [lengthAlert show];
+    }
+    else
+    {
+        NSString* nameCountURL = @"https://intense-fire-739.firebaseio.com/Name Count";
+        Firebase* nameCountFirebase = [[Firebase alloc] initWithUrl:nameCountURL];
+        [nameCountFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot* snapshot)
+         {
+             NSInteger count = [snapshot.value integerValue];
+             
+             NSString* NamesURL = @"https://intense-fire-739.firebaseio.com/Names";
+             Firebase* nameFirebase = [[Firebase alloc] initWithUrl:NamesURL];
+             if (count)
+             {
+                 [self.names removeAllObjects];
+                 [nameFirebase observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
+                  {
+                      [self.names addObject:snapshot.value];
+                  
+                      if ([self.names count] == count)
+                      {
+                          BOOL legal = YES;
+                          for (NSDictionary* dic in self.names)
+                          {
+                              if ([dic[@"Name"] isEqualToString:[sender text]])
+                              {
+                                  legal = NO;
+                                  break;
+                              }
+                          }
+                      
+                          if (legal)
+                          {
+                              NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+                              [defaults setValue:[sender text] forKey:@"Name"];
+                              [defaults synchronize];
+                          
+                              [nameCountFirebase removeAllObservers];
+                              [nameFirebase removeAllObservers];
+                              [nameCountFirebase setValue:[@(count + 1) stringValue]];
+                              [[nameFirebase childByAutoId] setValue:@{@"Name":[sender text]}];
+                              
+                              [self performSegueWithIdentifier:@"pushToMain" sender:self];
+                          }
+                          else
+                          {
+                              UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Name is used" message:@"Change another name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                              [alert show];
+                          }
+                      }
+                  }];
+             }
+             else
+             {
+                 NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+                 [defaults setValue:[sender text] forKey:@"Name"];
+                 [defaults synchronize];
+                 
+                 [nameCountFirebase removeAllObservers];
+                 [nameFirebase removeAllObservers];
+                 [nameCountFirebase setValue:[@(count + 1) stringValue]];
+                 [[nameFirebase childByAutoId] setValue:@{@"Name":[sender text]}];
+                 
+                 [self performSegueWithIdentifier:@"pushToMain" sender:self];
+             }
+         }];
+    }
 }
 
 @end

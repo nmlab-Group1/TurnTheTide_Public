@@ -7,7 +7,6 @@
 //
 
 #import "MainViewController.h"
-#import "RoomViewController.h"
 
 @interface MainViewController ()
 
@@ -36,15 +35,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"mainToRoom"])
-    {
-        RoomViewController* controller = (RoomViewController*)segue.destinationViewController;
-        controller.name = self.name;
-    }
 }
 
 @end

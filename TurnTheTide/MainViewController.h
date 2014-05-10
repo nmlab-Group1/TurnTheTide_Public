@@ -11,6 +11,4 @@
 
 @interface MainViewController : UIViewController
 
-@property (strong, nonatomic) NSString* name;
-
 @end

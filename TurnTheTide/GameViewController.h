@@ -13,6 +13,5 @@
 @interface GameViewController : UIViewController
 
 @property (strong, nonatomic) NSString* roomID;
-@property (strong, nonatomic) NSString* name;
 
 @end

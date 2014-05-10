@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GlobalData.h"
+#import <Firebase/Firebase.h>
 
 @interface NameViewController : UIViewController
 

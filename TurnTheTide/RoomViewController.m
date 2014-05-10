@@ -45,7 +45,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    nameLabel.text = self.name;
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    nameLabel.text = [defaults valueForKey:@"Name"];
     roomsTableView.rowHeight = 99;
 }
 
@@ -84,7 +85,6 @@
     {
         GameViewController* controller = (GameViewController*)segue.destinationViewController;
         controller.roomID = self.selectedRoomID;
-        controller.name = self.name;
     }
 }
 
@@ -144,7 +144,7 @@
          {
              [[self.roomFirebase childByAppendingPath:roomNeed] setValue:[@(need - 1) stringValue]];
              Firebase* playerFirebase = [[Firebase alloc] initWithUrl:playersPath];
-             [[playerFirebase childByAutoId] setValue:@{@"Name":self.name, @"Order":[@(need - 1) stringValue]}];
+             [[playerFirebase childByAutoId] setValue:@{@"Name":[nameLabel text], @"Order":[@(need - 1) stringValue]}];
              
              [self performSegueWithIdentifier:@"roomToGame" sender:nil];
          }
@@ -225,7 +225,7 @@
     if (![[playerCountLabel text] isEqualToString:@"All"] && ![[modeLabel text] isEqualToString:@"All"])
     {
         Firebase* child = [self.roomFirebase childByAutoId];
-        [child setValue:@{@"Owner":self.name, @"Mode":modeLabel.text, @"Player Count":playerCountLabel.text, @"Need":playerCountLabel.text}];
+        [child setValue:@{@"Owner":[nameLabel text], @"Mode":modeLabel.text, @"Player Count":playerCountLabel.text, @"Need":playerCountLabel.text}];
         Firebase* gameFirebase = [[Firebase alloc] initWithUrl:GameURL];
         NSString* childPath = [NSString stringWithFormat:@"/%@", child.name];
         NSString* deckPath = [NSString stringWithFormat:@"/%@/Deck", child.name];

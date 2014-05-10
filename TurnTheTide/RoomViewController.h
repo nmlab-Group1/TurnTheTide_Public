@@ -11,8 +11,6 @@
 
 @interface RoomViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSString* name;
-
 @property (weak, nonatomic) IBOutlet UITableView *roomsTableView;
 @property (weak, nonatomic) IBOutlet UILabel *playerCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *modeLabel;
