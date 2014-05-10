@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Firebase/Firebase.h>
+#import "TTTWeatherCardView.h"
+#import "TTTPlayerView.h"
 #import "GlobalData.h"
 
 @interface GameViewController : UIViewController

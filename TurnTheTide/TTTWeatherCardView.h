@@ -11,7 +11,7 @@
 
 @interface TTTWeatherCardView : UIView
 
-- (BOOL)setAllWithRank:(int)rank;
+- (BOOL)setWithRank:(int)rank;
 - (BOOL)becomeChosen;
 - (BOOL)becomeUnchosen;
 - (int)getRank;

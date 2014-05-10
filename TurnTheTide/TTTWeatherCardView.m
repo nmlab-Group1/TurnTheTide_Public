@@ -29,6 +29,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self awakeFromNib];
     }
     return self;
 }
@@ -65,7 +66,7 @@
 
 #pragma mark - Setting
 
-- (BOOL)setAllWithRank:(int)rank
+- (BOOL)setWithRank:(int)rank
 {
     _rank = rank;
     _life = [self countLife:rank];

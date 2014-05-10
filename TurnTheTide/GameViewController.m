@@ -30,6 +30,14 @@
 
 @property (strong, nonatomic) NSMutableArray* playerLabel;
 
+//by Roger
+
+@property (strong, nonatomic) NSMutableArray *weatherCards;
+@property (weak, atomic) TTTWeatherCardView *chosenCard;
+@property (strong, nonatomic) UISwipeGestureRecognizer * tempRecog;
+
+//end by Roger
+
 @end
 
 @implementation GameViewController
@@ -47,9 +55,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //play music by Roger
     GlobalData * globalData = [GlobalData getInstance];
     [globalData.BGM_Main stop];
     [globalData.BGM_Game play];
+    
+    //create weather cards and link to gesture recognizer by Roger
+    [self initWeatherCards];
+    [self initGestureOfWeatherCards];
     
     self.nowAt = 1;
     self.sendTo = @"1";
@@ -230,5 +244,106 @@
          }];
     }
 }
+
+//by Roger
+/*
+- (void)viewDidLayoutSubviews
+{
+    for (int i = 0; i < 12; ++i) {
+        [[_weatherCards objectAtIndex:i] setCenter:CGPointMake(72+96+64*i, 672+144)];
+    }
+}
+*/
+- (void)initWeatherCards
+{
+    _weatherCards = [[NSMutableArray alloc] init];
+    for (int i = 0; i < HAND_COUNT; ++i) {
+        TTTWeatherCardView* tempCard = [[TTTWeatherCardView alloc] initWithFrame:CGRectMake(72+64*i, 672, 192, 288)];
+        [self.view addSubview:tempCard];
+        [_weatherCards addObject:tempCard];
+    }
+}
+
+- (void)initGestureOfWeatherCards
+{
+    for (int i = 0; i < HAND_COUNT; ++i) {
+        _tempRecog = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
+        [_tempRecog setDirection:UISwipeGestureRecognizerDirectionUp];
+        [[_weatherCards objectAtIndex:i] addGestureRecognizer:_tempRecog];
+    }
+    for (int i = 0; i < HAND_COUNT; ++i) {
+        _tempRecog = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
+        [_tempRecog setDirection:UISwipeGestureRecognizerDirectionDown];
+        [[_weatherCards objectAtIndex:i] addGestureRecognizer:_tempRecog];
+    }
+}
+
+- (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
+    if ([(TTTWeatherCardView *)sender.view becomeChosen]) {
+        if (_chosenCard != nil) {
+            if (![_chosenCard isUsed]) {
+                [_chosenCard becomeUnchosen];
+            }
+        }
+        _chosenCard = (TTTWeatherCardView *)sender.view;
+        //todo: send chosen card message to server here
+    }
+}
+
+- (IBAction)swipeDown:(UISwipeGestureRecognizer *)sender {
+    if ( [(TTTWeatherCardView *)sender.view becomeUnchosen] )
+    {
+        _chosenCard = nil;
+        //todo: send cancel message to server
+    }
+}
+
+- (void)setUsedCard  //call this when chosen card is played
+{
+    [_chosenCard becomeUsedAndHidden];
+    _chosenCard = nil;
+    [self updateWeatherCardsPosition];
+}
+
+- (void)updateWeatherCardsPosition  //rearrange position
+{
+    NSUInteger unplayedCardCount = [self countUnplayedCards];
+    NSUInteger unplayedCardIndex = 0;
+    TTTWeatherCardView * temp;
+    //ori pos(left end): 72 + 64*11 = 72 + 704
+    //new pos(left end): 72 + 704*i/(n-1)
+    //    pos(top end): 672
+    //center: +96, +144
+    for (NSUInteger i = 0; i < unplayedCardCount; ++i) {
+        temp = [_weatherCards objectAtIndex:i];
+        if (temp != nil) {
+            if ([temp isUsed]) {
+                [_chosenCard setHidden:YES];    //for safety
+            }
+            else
+            {
+                [temp setCenter:
+                 CGPointMake(72+704*unplayedCardIndex/(unplayedCardCount-1)+96, 672+144)];
+                [temp becomeUnchosen];  //for safety
+                ++unplayedCardIndex;
+            }
+        }
+    }
+}
+
+- (NSUInteger)countUnplayedCards
+{
+    NSUInteger unplayedCardsCount = 0;
+    for (NSUInteger i = 0; i < [_weatherCards count]; ++i) {
+        if ([_weatherCards objectAtIndex:i] != nil) {
+            if (![[_weatherCards objectAtIndex:i] isUsed]) {
+                ++unplayedCardsCount;
+            }
+        }
+    }
+    return unplayedCardsCount;
+}
+
+//end by Roger
 
 @end
