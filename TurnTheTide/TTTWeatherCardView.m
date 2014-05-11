@@ -142,6 +142,11 @@
     return _rank;
 }
 
+- (int)getLife
+{
+    return _life;
+}
+
 - (BOOL)isUsed
 {
     return _isUsed;
