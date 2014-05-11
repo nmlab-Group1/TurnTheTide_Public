@@ -29,6 +29,8 @@
 @property (strong, nonatomic) NSMutableDictionary* roundCard;
 @property (strong, nonatomic) NSMutableArray* tideCards;
 @property (nonatomic) NSInteger life;
+@property (strong, nonatomic) NSString* tides1;
+@property (strong, nonatomic) NSString* tides2;
 
 @property (strong, nonatomic) NSMutableArray* playerLabel;
 @property (strong, nonatomic) NSMutableArray *playerViews;
@@ -244,8 +246,10 @@
      }];
     
     NSDictionary* dic = [self.tideCards objectAtIndex:0];
-    self.tide1.text = dic[@"t1"];
-    self.tide2.text = dic[@"t2"];
+    self.tides1 = dic[@"t1"];
+    self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
+    self.tides2 = dic[@"t2"];
+    self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
 }
 
 - (void)cardPicked:(UIButton*)button
@@ -326,14 +330,14 @@
                  {
                      // assign tide here
                      NSInteger tideBig, tideSmall;
-                     tideBig = tideSmall = [self.tide1.text integerValue];
-                     if ([self.tide2.text integerValue] > tideBig)
+                     tideBig = tideSmall = [self.tides1 integerValue];
+                     if ([self.tides2 integerValue] > tideBig)
                      {
-                         tideBig = [self.tide2.text integerValue];
+                         tideBig = [self.tides2 integerValue];
                      }
                      else
                      {
-                         tideSmall = [self.tide2.text integerValue];
+                         tideSmall = [self.tides2 integerValue];
                      }
                      
                      NSInteger first = 0, second = 0;
@@ -342,7 +346,9 @@
                      secondS = [[NSString alloc] init];
                      for (NSInteger i=0; i<[self.players count]; i++)
                      {
-                         NSString* thisName = [self.players objectAtIndex:i];
+                         NSDictionary* dic = [self.players objectAtIndex:i];
+                         NSString* thisName = dic[@"Name"];
+                         
                          NSInteger thisNum = [self.roundCard[thisName] integerValue];
                          if (thisNum > first)
                          {
@@ -357,18 +363,16 @@
                              secondS = thisName;
                          }
                      }
-                     // TTTPlayerView* playerView = [self.playerViews objectAtIndex:self.nowAt];
-                     // NSString* name = [playerView getName];
-                     // snapshot.name
+                     
                      for (TTTPlayerView* playerView in self.playerViews)
                      {
                          if ([[playerView getName] isEqualToString:firstS])
                          {
-                             [playerView setTide:second];
+                             [playerView setTide:tideSmall];
                          }
                          else if ([[playerView getName] isEqualToString:secondS])
                          {
-                             [playerView setTide:first];
+                             [playerView setTide:tideBig];
                              [playerView loseOneLife];
                          }
                      }
@@ -381,8 +385,10 @@
                      
                      // new round
                      NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
-                     self.tide1.text = dic[@"t1"];
-                     self.tide2.text = dic[@"t2"];
+                     self.tides1 = dic[@"t1"];
+                     self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
+                     self.tides2 = dic[@"t2"];
+                     self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
                  }
              }];
         }
@@ -413,7 +419,11 @@
     //new pos(left end): 72 + 704*i/(n-1)
     //    pos(top end): 672
     //center: +96, +144
-    for (NSUInteger i = 0; i < unplayedCardCount; ++i) {
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelay:0.25];
+    
+    for (NSUInteger i = 0; i < HAND_COUNT; ++i) {
         temp = [_weatherCards objectAtIndex:i];
         if (temp != nil) {
             if ([temp isUsed]) {
@@ -428,6 +438,8 @@
             }
         }
     }
+    
+    [UIView commitAnimations];
 }
 
 - (NSUInteger)countUnplayedCards

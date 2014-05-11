@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableArray* localRooms;
 @property (strong, nonatomic) NSMutableArray* roomIDs;
 @property (strong, nonatomic) NSString* selectedRoomID;
+@property (strong, nonatomic) NSMutableDictionary* room;
 
 @end
 
@@ -47,7 +48,7 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     nameLabel.text = [defaults valueForKey:@"Name"];
-    roomsTableView.rowHeight = 99;
+    roomsTableView.rowHeight = 85;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
 }
@@ -57,6 +58,7 @@
     self.rooms = [[NSMutableArray alloc] init];
     localRooms = [[NSMutableArray alloc] init];
     self.roomIDs = [[NSMutableArray alloc] init];
+    self.room = [[NSMutableDictionary alloc] init];
     
     self.roomFirebase = [[Firebase alloc] initWithUrl:RoomURL];
     [self.roomFirebase observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
@@ -64,13 +66,22 @@
          [self.roomIDs addObject:snapshot.name];
          [self.rooms addObject:snapshot.value];
          localRooms = self.rooms;
+         
+         [self.room addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
+         
          [self.roomsTableView reloadData];
      }];
-    [self.roomFirebase observeEventType:FEventTypeChildRemoved withBlock:^(FDataSnapshot* snapshot)
+    [self.roomFirebase observeEventType:FEventTypeChildChanged withBlock:^(FDataSnapshot* snapshot)
      {
+         [self.roomIDs removeObject:snapshot.name];
          [self.roomIDs addObject:snapshot.name];
+         [self.rooms removeObject:snapshot.value];
          [self.rooms addObject:snapshot.value];
          localRooms = self.rooms;
+         
+         [self.room removeObjectForKey:snapshot.name];
+         [self.room setValue:snapshot.value forKey:snapshot.name];
+         
          [self.roomsTableView reloadData];
      }];
 }
@@ -93,7 +104,7 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [localRooms count];
+    return [[self.room allKeys] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,7 +118,9 @@
         cell = [nib objectAtIndex:0];
     }
     
-    NSDictionary* roomContent = [localRooms objectAtIndex:indexPath.row];
+    NSString* ID = [self.roomIDs objectAtIndex:indexPath.row];
+    NSDictionary* roomContent = self.room[ID];
+    // NSDictionary* roomContent = [localRooms objectAtIndex:indexPath.row];
     
     NSString* playerCount = roomContent[@"Player Count"];
     NSString* need = roomContent[@"Need"];
@@ -125,9 +138,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedRoomID = [self.roomIDs objectAtIndex:indexPath.row];
-    
-    NSDictionary* content = [localRooms objectAtIndex:indexPath.row];
-    NSInteger need = [content[@"Need"] integerValue];
 
     NSString* roomID = [self.roomIDs objectAtIndex:indexPath.row];
     NSString* roomNeed = [NSString stringWithFormat:@"/%@/Need", roomID];
@@ -137,6 +147,8 @@
     Firebase* needFirebase = [[Firebase alloc] initWithUrl:needPath];
     [needFirebase observeSingleEventOfType:FEventTypeValue withBlock:^(FDataSnapshot* snapshot)
      {
+         NSInteger order = [snapshot.value integerValue];
+         
          if ([snapshot.value isEqualToString:@"0"])
          {
              UIAlertView* unableToJoin = [[UIAlertView alloc] initWithTitle:@"Unable to Join Room" message:@"Room is full now" delegate:nil cancelButtonTitle:@"Got it" otherButtonTitles:nil];
@@ -144,9 +156,9 @@
          }
          else
          {
-             [[self.roomFirebase childByAppendingPath:roomNeed] setValue:[@(need - 1) stringValue]];
+             [[self.roomFirebase childByAppendingPath:roomNeed] setValue:[@(order - 1) stringValue]];
              Firebase* playerFirebase = [[Firebase alloc] initWithUrl:playersPath];
-             [[playerFirebase childByAutoId] setValue:@{@"Name":[nameLabel text], @"Order":[@(need - 1) stringValue]}];
+             [[playerFirebase childByAutoId] setValue:@{@"Name":[nameLabel text], @"Order":[@(order - 1) stringValue]}];
              
              [self performSegueWithIdentifier:@"roomToGame" sender:nil];
          }

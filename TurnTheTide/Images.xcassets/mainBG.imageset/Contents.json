@@ -1,14 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "ipad",
+      "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "mainBG_1.png"
+      "filename" : "mainBG_oil_1x.png"
     },
     {
-      "idiom" : "ipad",
+      "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mainBG_2.png"
+      "filename" : "mainBG_oil_2x.png"
     }
   ],
   "info" : {

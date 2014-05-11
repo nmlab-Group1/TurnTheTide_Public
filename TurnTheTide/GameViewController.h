@@ -15,7 +15,8 @@
 @interface GameViewController : UIViewController
 
 @property (strong, nonatomic) NSString* roomID;
-@property (weak, nonatomic) IBOutlet UILabel *tide1;
-@property (weak, nonatomic) IBOutlet UILabel *tide2;
+@property (weak, nonatomic) IBOutlet UIImageView *tide2;
+@property (weak, nonatomic) IBOutlet UIImageView *tide1;
+
 
 @end
