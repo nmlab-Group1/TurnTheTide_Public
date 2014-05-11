@@ -11,6 +11,9 @@
 
 @interface TTTPlayerView : UIView
 
+- (BOOL) setNameAndLife:(NSString *)name life:(int)life;
 - (void)setTide:(int)newTide;
+- (BOOL)loseOneLife;
+
 
 @end

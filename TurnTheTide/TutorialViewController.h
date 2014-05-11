@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GlobalData.h"
+#import "TTTWeatherCardView.h"
+#import "TTTPlayerView.h"
 
 @interface TutorialViewController : UIViewController
 

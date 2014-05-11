@@ -36,7 +36,7 @@
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [UIColor colorWithPatternImage: [UIImage imageNamed:@"WeatherCardTest"]];
+    self.backgroundColor = [UIColor colorWithPatternImage: [UIImage imageNamed:@"WeatherCard"]];
     _rank = 0;
     _life = 0;
     _isChosen = NO;
@@ -61,7 +61,7 @@
 {
     _lifeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16, 48, 36, 36)];
     _lifeImageView.contentMode = UIViewContentModeTop;
-        [self addSubview:_lifeImageView];
+    [self addSubview:_lifeImageView];
 }
 
 #pragma mark - Setting
