@@ -364,8 +364,12 @@
                          }
                      }
                      
+                     int tide = 0;
                      for (TTTPlayerView* playerView in self.playerViews)
                      {
+                         if ([playerView getTide] > tide)
+                             tide = [playerView getTide];
+                         
                          if ([[playerView getName] isEqualToString:firstS])
                          {
                              [playerView setTide:tideSmall];
@@ -373,6 +377,13 @@
                          else if ([[playerView getName] isEqualToString:secondS])
                          {
                              [playerView setTide:tideBig];
+                         }
+                     }
+                     
+                     for (TTTPlayerView* playerView in self.playerViews)
+                     {
+                         if ([playerView getTide] == tide)
+                         {
                              [playerView loseOneLife];
                          }
                      }

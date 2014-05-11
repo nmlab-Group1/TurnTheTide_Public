@@ -13,6 +13,7 @@
 
 - (BOOL)setNameAndLife:(NSString *)name life:(int)life;
 - (void)setTide:(int)newTide;
+- (int)getTide;
 - (BOOL)loseOneLife;
 - (NSString*)getName;
 - (int)getCurrentLifeNum;

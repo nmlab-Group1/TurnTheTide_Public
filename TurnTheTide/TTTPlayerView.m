@@ -130,6 +130,11 @@
     return _name;
 }
 
+- (int)getTide
+{
+    return _tide;
+}
+
 #pragma mark - getter
 
 - (int)getCurrentLifeNum
