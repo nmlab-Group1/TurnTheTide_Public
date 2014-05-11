@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSString* sendTo;
 @property (strong, nonatomic) NSMutableArray* roundCard;
 @property (strong, nonatomic) NSMutableArray* tideCards;
+@property (nonatomic) NSInteger life;
 
 @property (strong, nonatomic) NSMutableArray* playerLabel;
 
@@ -74,6 +75,8 @@
 {
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     self.name = [defaults objectForKey:@"Name"];
+    
+    self.life = 0;
     
     self.players = [[NSMutableArray alloc] init];
     self.myCards = [[NSMutableArray alloc] init];
@@ -135,6 +138,13 @@
               }
           }];
      }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    GlobalData * globalData = [GlobalData getInstance];
+    [globalData.BGM_Game stop];
+    [globalData.BGM_Main play];
 }
 
 - (void)didReceiveMemoryWarning
@@ -202,11 +212,27 @@
 {
     self.myCards = [self.myCards sortedArrayUsingSelector:@selector(compare:)];
     
+    double tLife = 0;
     for (NSInteger i=0; i<12; ++i)
     {
         TTTWeatherCardView* card = [_weatherCards objectAtIndex:i];
         [card setWithRank:[[self.myCards objectAtIndex:i] integerValue]];
+        // convert rank to life
+        tLife += [card getLife];
     }
+    
+    self.life = tLife;
+    NSString* lifeURL = [self.gameRoomURL stringByAppendingString:@"/Life"];
+    // send life
+    Firebase* lifeFirebase = [[Firebase alloc] initWithUrl:lifeURL];
+    [lifeFirebase updateChildValues:@{self.name:[NSString stringWithFormat:@"%d", self.life]}];
+    
+    // get all life, display
+    [lifeFirebase observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
+     {
+         NSLog(@" name: %@", snapshot.name);
+         NSLog(@"value: %@", snapshot.value);
+     }];
     
     NSDictionary* dic = [self.tideCards objectAtIndex:0];
     self.tide1.text = dic[@"t1"];

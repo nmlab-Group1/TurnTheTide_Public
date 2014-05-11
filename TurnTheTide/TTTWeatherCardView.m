@@ -142,7 +142,7 @@
     return _rank;
 }
 
-- (int)getLife
+- (double)getLife
 {
     return _life;
 }

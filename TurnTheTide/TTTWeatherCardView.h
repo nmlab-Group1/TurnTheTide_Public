@@ -15,7 +15,7 @@
 - (BOOL)becomeChosen;
 - (BOOL)becomeUnchosen;
 - (int)getRank;
-- (int)getLife;
+- (double)getLife;
 - (BOOL)isUsed;
 - (BOOL)becomeUsedAndHidden;
 
