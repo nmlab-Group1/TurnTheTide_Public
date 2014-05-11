@@ -42,6 +42,7 @@
     [self initGestureOfWeatherCards];
     
     [self initPlayerViews:3];
+    NSLog(@"%d", [_playerViews count]);
 }
 
 - (void)initWeatherCards
@@ -73,9 +74,12 @@
     int intervalX = (1024 - playerCount * PLAYER_VIEW_WIDTH)/(playerCount+1);
     int offsetY = 16;
     
+    _playerViews = [[NSMutableArray alloc] init];
+    
     for (int i = 0; i < playerCount; ++i) {
         TTTPlayerView *temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(i+1) + PLAYER_VIEW_WIDTH*i, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
         [temp setNameAndLife:@"test player" life:10];
+NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
         [_playerViews addObject:temp];
         [self.view addSubview:temp];
     }
@@ -103,6 +107,10 @@
 }
 
 #pragma mark - methods
+
+- (IBAction)testButton:(UIButton *)sender {
+    [[_playerViews objectAtIndex:1] loseOneLife];
+}
 
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
     if ([(TTTWeatherCardView *)sender.view becomeChosen]) {

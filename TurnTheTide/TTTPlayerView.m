@@ -81,7 +81,7 @@
     _lifeImageViews = [[NSMutableArray alloc] init];
 }
 
-#pragma mark - Setting
+#pragma mark - Setter
 
 - (BOOL) setNameAndLife:(NSString *)name life:(int)life
 {
@@ -104,50 +104,16 @@
 
 - (void)setLifeImages
 {
-    //total height: 96, width: 152
-    //one image: 24*24
-    //x align: 4, 24*6, 4
-/*    if (_totalLife <= 6) {
-        //y: 32 + [36, "24", 36]
-        for (int i = 0; i < _totalLife; ++i) {
-            [self setOneLifeImage:CGRectMake(4+24*i, 68, 24, 24)];
-        }
-    }
-    else if (_totalLife <= 12){
-        //y: 32 + [24, 24*2, 24]
-        for (int i = 0; i < 6; ++i) {
-            [self setOneLifeImage:CGRectMake(4+24*i, 56, 24, 24)];
-        }
-        for (int i = 0; i < _totalLife-6; ++i) {
-            [self setOneLifeImage:CGRectMake(4+24*i, 80, 24, 24)];
-        }
-    }
-*/
+    //total height: 96, width: 128
+    //one image: 32*32
+    //x align: 32*n
+    //y align: 32+32 , 32+16, 32+0
     
-    //oneimage: 32*32
-    int offsetY = 32 + 32 - 16*(_totalLife/4);
+    //one image: 32*32
+    int offsetY = 32 + ( 32 - 16*( (_totalLife-1)/4 ) );
     for (int i = 0; i < _totalLife; ++i) {
         [self setOneLifeImage:CGRectMake(32*(i%4), offsetY+32*(i/4), 32, 32)];
     }
-/*
-    if (_totalLife <= 4) {
-        //y: 32 + [32, "32", 32]
-        for (int i = 0; i < _totalLife; ++i) {
-            [self setOneLifeImage:CGRectMake(12+32*i, 64, 32, 32)];
-        }
-    }
-    else if (_totalLife <= 8){
-        //y: 32 + [16, 32*2, 16]
-        for (int i = 0; i < _totalLife; ++i) {
-            [self setOneLifeImage:CGRectMake(12+32*(i%4), 48+32*(i/4), 32, 32)];
-        }
-    }
-    else if (_totalLife <= 12) {
-        for (int i = 0; i < _totalLife; ++i) {
-            [self setOneLifeImage:CGRectMake(12+32*(i%4), 32+32*(i/4), 32, 32)];
-        }
-    }
-*/
 }
 
 - (void)setOneLifeImage:(CGRect)frame
@@ -164,6 +130,14 @@
     return _name;
 }
 
+#pragma mark - getter
+
+- (int)getCurrentLifeNum
+{
+    NSLog(@"%d", _currentLife);
+    return _currentLife;
+}
+
 #pragma mark - Event
 
 - (void)hasPlayed:(int)playedWeatherCardNum
@@ -174,10 +148,39 @@
 
 - (BOOL)loseOneLife     //check if die
 {
-    //animation
-    
-    
     --_currentLife;
+    if(_currentLife < 0)
+        return NO;
+    //animation
+    TTTPlayerView *temp = [_lifeImageViews objectAtIndex:_currentLife];
+/*
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.2];
+//    [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
+    temp.Alpha = 0.1;
+    [UIView commitAnimations];
+*/
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.2];
+    [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
+    [UIView commitAnimations];
+    
+    [NSThread sleepForTimeInterval:0.2];
+
+    [UIView beginAnimations:nil context:UIGraphicsGetCurrentContext()];
+    [UIView setAnimationDuration:0.2];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:temp cache:YES];
+    [temp setAlpha:0.1];
+    [UIView commitAnimations];
+    
+    [NSThread sleepForTimeInterval:0.2];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.2];
+    [temp setFrame:CGRectMake(temp.frame.origin.x + 16, temp.frame.origin.y + 16, 32, 32)];
+    [UIView commitAnimations];
+
     return YES;
 }
 
