@@ -17,6 +17,8 @@
 @property (strong, nonatomic) TTTPlayerView *testPlayer;
 @property (strong, nonatomic) NSMutableArray *playerViews;
 
+@property (nonatomic) int stepNum;
+
 @end
 
 @implementation TutorialViewController
@@ -43,6 +45,8 @@
     
     [self initPlayerViews:3];
     NSLog(@"%d", [_playerViews count]);
+    
+    _stepNum = 0;
 }
 
 - (void)initWeatherCards
@@ -79,7 +83,6 @@
     for (int i = 0; i < playerCount; ++i) {
         TTTPlayerView *temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(i+1) + PLAYER_VIEW_WIDTH*i, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
         [temp setNameAndLife:@"test player" life:10];
-NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
         [_playerViews addObject:temp];
         [self.view addSubview:temp];
     }
@@ -109,7 +112,9 @@ NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
 #pragma mark - methods
 
 - (IBAction)testButton:(UIButton *)sender {
-    [[_playerViews objectAtIndex:1] loseOneLife];
+//    [[_playerViews objectAtIndex:1] loseOneLife];
+    [[_weatherCards objectAtIndex:(arc4random()%HAND_COUNT)] becomeUsedAndHidden];
+    [self updateWeatherCardsPosition];
 }
 
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
@@ -148,7 +153,11 @@ NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
     //new pos(left end): 72 + 704*i/(n-1)
     //    pos(top end): 672
     //center: +96, +144
-    for (NSUInteger i = 0; i < unplayedCardCount; ++i) {
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.25];
+
+    for (NSUInteger i = 0; i < HAND_COUNT; ++i) {
         temp = [_weatherCards objectAtIndex:i];
         if (temp != nil) {
             if ([temp isUsed]) {
@@ -163,6 +172,8 @@ NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
             }
         }
     }
+    
+    [UIView commitAnimations];
 }
 
 - (NSUInteger)countUnplayedCards
@@ -179,6 +190,13 @@ NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
 }
 
 
+
+#pragma mark - Tutorial
+
+- (void)tutorial_weatherCard
+{
+
+}
 
 
 /*
