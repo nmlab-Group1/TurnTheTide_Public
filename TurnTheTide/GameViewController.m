@@ -364,12 +364,9 @@
                          }
                      }
                      
-                     int tide = 0;
+                     int tide = -1;
                      for (TTTPlayerView* playerView in self.playerViews)
                      {
-                         if ([playerView getTide] > tide)
-                             tide = [playerView getTide];
-                         
                          if ([[playerView getName] isEqualToString:firstS])
                          {
                              [playerView setTide:tideSmall];
@@ -378,7 +375,14 @@
                          {
                              [playerView setTide:tideBig];
                          }
+                         
+                         NSLog(@"%d", [playerView getTide]);
+                         
+                         if ([playerView getTide] > tide)
+                             tide = [playerView getTide];
                      }
+                     
+                     NSLog(@"  %d", tide);
                      
                      for (TTTPlayerView* playerView in self.playerViews)
                      {
