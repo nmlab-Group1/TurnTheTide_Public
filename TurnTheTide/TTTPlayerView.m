@@ -160,27 +160,23 @@
     temp.Alpha = 0.1;
     [UIView commitAnimations];
 */
-
+/*
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.2];
     [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
     [UIView commitAnimations];
-    
-    [NSThread sleepForTimeInterval:0.2];
-
+*/
     [UIView beginAnimations:nil context:UIGraphicsGetCurrentContext()];
-    [UIView setAnimationDuration:0.2];
+    [UIView setAnimationDuration:0.25];
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:temp cache:YES];
     [temp setAlpha:0.1];
     [UIView commitAnimations];
-    
-    [NSThread sleepForTimeInterval:0.2];
-    
+/*
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.2];
     [temp setFrame:CGRectMake(temp.frame.origin.x + 16, temp.frame.origin.y + 16, 32, 32)];
     [UIView commitAnimations];
-
+*/
     return YES;
 }
 

@@ -17,6 +17,8 @@
 @property (strong, nonatomic) TTTPlayerView *testPlayer;
 @property (strong, nonatomic) NSMutableArray *playerViews;
 
+@property (nonatomic) int stepNum;
+
 @end
 
 @implementation TutorialViewController
@@ -43,6 +45,8 @@
     
     [self initPlayerViews:3];
     NSLog(@"%d", [_playerViews count]);
+    
+    _stepNum = 0;
 }
 
 - (void)initWeatherCards
@@ -179,6 +183,13 @@ NSLog(@"%d %d", -546, [temp getCurrentLifeNum]);
 }
 
 
+
+#pragma mark - Tutorial
+
+- (void)tutorial_weatherCard
+{
+
+}
 
 
 /*

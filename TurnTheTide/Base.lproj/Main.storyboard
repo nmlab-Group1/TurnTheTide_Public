@@ -364,12 +364,17 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="gcC-eP-wWn" appends="YES" id="DZe-7S-Xlb"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="Jvz-UM-fHL"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bT3-YS-yQY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="gcC-eP-wWn"/>
             </objects>
             <point key="canvasLocation" x="3174" y="-1059"/>
         </scene>
