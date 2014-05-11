@@ -30,7 +30,6 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults valueForKey:@"Name"])
     {
-        NSLog(@"Saved name: %@", [defaults valueForKey:@"Name"]);
         [self performSegueWithIdentifier:@"pushToMain" sender:self];
     }
 }

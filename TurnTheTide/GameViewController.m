@@ -27,6 +27,7 @@
 @property (nonatomic) NSInteger nowAt;
 @property (strong, nonatomic) NSString* sendTo;
 @property (strong, nonatomic) NSMutableArray* roundCard;
+@property (strong, nonatomic) NSMutableArray* tideCards;
 
 @property (strong, nonatomic) NSMutableArray* playerLabel;
 
@@ -78,7 +79,8 @@
     self.myCards = [[NSMutableArray alloc] init];
     self.roundCard = [[NSMutableArray alloc] init];
     self.playerLabel = [[NSMutableArray alloc] init];
-    self.deck = [[NSMutableArray alloc] initWithObjects:@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40", @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49", @"50", @"51", @"52", @"53", @"54", @"55", @"56", @"57", @"58", @"59", @"60", nil];
+    self.tideCards = [[NSMutableArray alloc] init];
+    self.deck = [[NSMutableArray alloc] initWithObjects:@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40", @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49", @"50", @"51", @"52", @"53", @"54", @"55", @"56", @"57", @"58", @"59", @"60", nil];
 
     self.gameRoomURL = [NSString stringWithFormat:@"%@/%@", GameURL, self.roomID];
     
@@ -87,6 +89,13 @@
     [modeFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot* snapshot)
      {
          self.mode = snapshot.value;
+     }];
+    
+    NSString* tideURL = [self.gameRoomURL stringByAppendingString:@"/Tide"];
+    Firebase* tideFirebase = [[Firebase alloc] initWithUrl:tideURL];
+    [tideFirebase observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
+     {
+         [self.tideCards addObject:snapshot.value];
      }];
     
     NSString* playerCountURL = [self.gameRoomURL stringByAppendingString:@"/Player Count"];
@@ -191,58 +200,22 @@
 
 - (void)initGame
 {
-    // NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES selector:@selector(localizedCompare:)];
-    // self.myCards = [self.myCards sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    self.myCards = [self.myCards sortedArrayUsingSelector:@selector(compare:)];
     
     for (NSInteger i=0; i<12; ++i)
     {
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [button setTag:[[self.myCards objectAtIndex:i] integerValue]];
-        [button setTitle:[self.myCards objectAtIndex:i] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(cardPicked:) forControlEvents:UIControlEventTouchUpInside];
-        button.frame = CGRectMake(20+60*i, 20, 40, 40);
-        [self.view addSubview:button];
+        TTTWeatherCardView* card = [_weatherCards objectAtIndex:i];
+        [card setWithRank:[[self.myCards objectAtIndex:i] integerValue]];
     }
+    
+    NSDictionary* dic = [self.tideCards objectAtIndex:0];
+    self.tide1.text = dic[@"t1"];
+    self.tide2.text = dic[@"t2"];
 }
 
 - (void)cardPicked:(UIButton*)button
 {
-    if (self.nowAt == [self.sendTo integerValue])
-    {
-        [button setHidden:YES];
-        NSString* roundURL = [NSString stringWithFormat:@"%@/Rounds/%d", self.gameRoomURL, self.nowAt];
-        Firebase* sendToRound = [[Firebase alloc] initWithUrl:roundURL];
-        [sendToRound updateChildValues:@{self.name: [@([button tag]) stringValue]}];
-        self.sendTo = [@([self.sendTo integerValue] + 1) stringValue];
-        
-        [sendToRound observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
-         {
-             [self.roundCard addObject:snapshot.value];
-             
-             // someone's card here
-             NSLog(@" name: %@", snapshot.name);
-             NSLog(@"value: %@", snapshot.value);
-             for (int i=0; i<[self.playerCount integerValue]; i++)
-             {
-                 UILabel* label = [self.playerLabel objectAtIndex:i];
-                 if ([[label text] isEqualToString:snapshot.name])
-                 {
-                     UILabel* numberLabel = [self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])];
-                     NSLog(@"numberLabel text: %@", [numberLabel text]);
-                     [numberLabel setText:snapshot.value];
-                     NSLog(@"new text: %@", [[self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])] text]);
-                     break;
-                 }
-             }
-             
-             if ([self.roundCard count] == [self.playerCount integerValue])
-             {
-                 [self.roundCard removeAllObjects];
-                 self.nowAt++;
-                 [sendToRound removeAllObservers];
-             }
-         }];
-    }
+    
 }
 
 //by Roger
@@ -286,7 +259,53 @@
             }
         }
         _chosenCard = (TTTWeatherCardView *)sender.view;
-        //todo: send chosen card message to server here
+    }
+    else {
+        // send card here
+        if (self.nowAt == [self.sendTo integerValue])
+        {
+            NSString* roundURL = [NSString stringWithFormat:@"%@/Rounds/%d", self.gameRoomURL, self.nowAt];
+            Firebase* sendToRound = [[Firebase alloc] initWithUrl:roundURL];
+            [sendToRound updateChildValues:@{self.name:[NSString stringWithFormat:@"%d", [_chosenCard getRank]]}];
+            [self setUsedCard];
+            self.sendTo = [@([self.sendTo integerValue] + 1) stringValue];
+            
+            [sendToRound observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
+             {
+                 [self.roundCard addObject:snapshot.value];
+                 
+                 // someone's card here
+                 NSLog(@" name: %@", snapshot.name);
+                 NSLog(@"value: %@", snapshot.value);
+                 for (int i=0; i<[self.playerCount integerValue]; i++)
+                 {
+                     UILabel* label = [self.playerLabel objectAtIndex:i];
+                     if ([[label text] isEqualToString:snapshot.name])
+                     {
+                         // index is now for two players
+                         UILabel* numberLabel = [self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])];
+                         NSLog(@"numberLabel text: %@", [numberLabel text]);
+                         [numberLabel setText:snapshot.value];
+                         NSLog(@"new text: %@", [[self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])] text]);
+                         break;
+                     }
+                 }
+                 
+                 if ([self.roundCard count] == [self.playerCount integerValue])
+                 {
+                     // assign tide here
+                     [self.roundCard removeAllObjects];
+                     self.nowAt++;
+                     [sendToRound removeAllObservers];
+                     
+                     // new round
+                     NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
+                     // NSLog(@"%@", self.tideCards);
+                     self.tide1.text = dic[@"t1"];
+                     self.tide2.text = dic[@"t2"];
+                 }
+             }];
+        }
     }
 }
 
