@@ -10,6 +10,7 @@
 #import "GlobalData.h"
 #import "TTTWeatherCardView.h"
 #import "TTTPlayerView.h"
+#import "TTTParameters.h"
 
 @interface TutorialViewController : UIViewController
 

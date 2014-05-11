@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UISwipeGestureRecognizer * tempRecog;
 
 @property (strong, nonatomic) TTTPlayerView *testPlayer;
+@property (strong, nonatomic) NSMutableArray *playerViews;
 
 @end
 
@@ -40,7 +41,7 @@
     [self initWeatherCards];
     [self initGestureOfWeatherCards];
     
-    [self initPlayer:3];
+    [self initPlayerViews:3];
 }
 
 - (void)initWeatherCards
@@ -67,11 +68,17 @@
     }
 }
 
-- (void)initPlayer:(int)playerCount
+- (void)initPlayerViews:(int)playerCount
 {
-    _testPlayer = [[TTTPlayerView alloc] initWithFrame:CGRectMake(72, 24, 200, 128)];
-    [_testPlayer setNameAndLife:@"test player" life:10];
-    [self.view addSubview:_testPlayer];
+    int intervalX = (1024 - playerCount * PLAYER_VIEW_WIDTH)/(playerCount+1);
+    int offsetY = 16;
+    
+    for (int i = 0; i < playerCount; ++i) {
+        TTTPlayerView *temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(i+1) + PLAYER_VIEW_WIDTH*i, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+        [temp setNameAndLife:@"test player" life:10];
+        [_playerViews addObject:temp];
+        [self.view addSubview:temp];
+    }
 }
 
 #pragma mark - terminate

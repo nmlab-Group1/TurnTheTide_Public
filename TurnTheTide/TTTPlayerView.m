@@ -169,6 +169,9 @@
 
 - (BOOL)loseOneLife     //check if die
 {
+    //animation
+    
+    
     --_currentLife;
     return YES;
 }
