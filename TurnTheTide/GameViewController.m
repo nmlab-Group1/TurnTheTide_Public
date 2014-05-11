@@ -26,11 +26,13 @@
 @property (nonatomic) BOOL selected;
 @property (nonatomic) NSInteger nowAt;
 @property (strong, nonatomic) NSString* sendTo;
-@property (strong, nonatomic) NSMutableArray* roundCard;
+@property (strong, nonatomic) NSMutableDictionary* roundCard;
 @property (strong, nonatomic) NSMutableArray* tideCards;
 @property (nonatomic) NSInteger life;
 
 @property (strong, nonatomic) NSMutableArray* playerLabel;
+@property (strong, nonatomic) NSMutableArray *playerViews;
+@property (strong, nonatomic) NSMutableDictionary* playerLife;
 
 //by Roger
 
@@ -69,6 +71,8 @@
     
     self.nowAt = 1;
     self.sendTo = @"1";
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -76,11 +80,11 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     self.name = [defaults objectForKey:@"Name"];
     
-    self.life = 0;
+    self.playerLife = [[NSMutableDictionary alloc] init];
     
     self.players = [[NSMutableArray alloc] init];
     self.myCards = [[NSMutableArray alloc] init];
-    self.roundCard = [[NSMutableArray alloc] init];
+    self.roundCard = [[NSMutableDictionary alloc] init];
     self.playerLabel = [[NSMutableArray alloc] init];
     self.tideCards = [[NSMutableArray alloc] init];
     self.deck = [[NSMutableArray alloc] initWithObjects:@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40", @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49", @"50", @"51", @"52", @"53", @"54", @"55", @"56", @"57", @"58", @"59", @"60", nil];
@@ -228,10 +232,15 @@
     [lifeFirebase updateChildValues:@{self.name:[NSString stringWithFormat:@"%d", self.life]}];
     
     // get all life, display
+    __block NSInteger count = 0;
     [lifeFirebase observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
      {
-         NSLog(@" name: %@", snapshot.name);
-         NSLog(@"value: %@", snapshot.value);
+         [self.playerLife addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
+         count++;
+         if (count == [self.playerCount integerValue])
+         {
+             [self initPlayerViews];
+         }
      }];
     
     NSDictionary* dic = [self.tideCards objectAtIndex:0];
@@ -298,11 +307,9 @@
             
             [sendToRound observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
              {
-                 [self.roundCard addObject:snapshot.value];
+                 [self.roundCard addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
                  
                  // someone's card here
-                 NSLog(@" name: %@", snapshot.name);
-                 NSLog(@"value: %@", snapshot.value);
                  for (int i=0; i<[self.playerCount integerValue]; i++)
                  {
                      UILabel* label = [self.playerLabel objectAtIndex:i];
@@ -310,23 +317,70 @@
                      {
                          // index is now for two players
                          UILabel* numberLabel = [self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])];
-                         NSLog(@"numberLabel text: %@", [numberLabel text]);
                          [numberLabel setText:snapshot.value];
-                         NSLog(@"new text: %@", [[self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])] text]);
                          break;
                      }
                  }
                  
-                 if ([self.roundCard count] == [self.playerCount integerValue])
+                 if ([[self.roundCard allKeys] count] == [self.playerCount integerValue])
                  {
                      // assign tide here
+                     NSInteger tideBig, tideSmall;
+                     tideBig = tideSmall = [self.tide1.text integerValue];
+                     if ([self.tide2.text integerValue] > tideBig)
+                     {
+                         tideBig = [self.tide2.text integerValue];
+                     }
+                     else
+                     {
+                         tideSmall = [self.tide2.text integerValue];
+                     }
+                     
+                     NSInteger first = 0, second = 0;
+                     NSString *firstS, *secondS;
+                     firstS = [[NSString alloc] init];
+                     secondS = [[NSString alloc] init];
+                     for (NSInteger i=0; i<[self.players count]; i++)
+                     {
+                         NSString* thisName = [self.players objectAtIndex:i];
+                         NSInteger thisNum = [self.roundCard[thisName] integerValue];
+                         if (thisNum > first)
+                         {
+                             second = first;
+                             secondS = firstS;
+                             first = thisNum;
+                             firstS = thisName;
+                         }
+                         else if (thisNum > second)
+                         {
+                             second = thisNum;
+                             secondS = thisName;
+                         }
+                     }
+                     // TTTPlayerView* playerView = [self.playerViews objectAtIndex:self.nowAt];
+                     // NSString* name = [playerView getName];
+                     // snapshot.name
+                     for (TTTPlayerView* playerView in self.playerViews)
+                     {
+                         if ([[playerView getName] isEqualToString:firstS])
+                         {
+                             [playerView setTide:second];
+                         }
+                         else if ([[playerView getName] isEqualToString:secondS])
+                         {
+                             [playerView setTide:first];
+                             [playerView loseOneLife];
+                         }
+                     }
+                     
                      [self.roundCard removeAllObjects];
-                     self.nowAt++;
                      [sendToRound removeAllObservers];
+                     
+                     
+                     self.nowAt++;
                      
                      // new round
                      NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
-                     // NSLog(@"%@", self.tideCards);
                      self.tide1.text = dic[@"t1"];
                      self.tide2.text = dic[@"t2"];
                  }
@@ -387,6 +441,36 @@
         }
     }
     return unplayedCardsCount;
+}
+
+- (void)initPlayerViews
+{
+    int playerCount = [self.playerCount integerValue];
+    int intervalX = (1024 - (playerCount-1) * PLAYER_VIEW_WIDTH)/(playerCount);
+    int offsetY = 16;
+    int otherPlayerCount = 0;
+    _playerViews = [[NSMutableArray alloc] init];
+    TTTPlayerView *temp;
+    
+    for (int i = 0; i < playerCount; ++i) {
+        NSDictionary* dic = [self.players objectAtIndex:i];
+        NSString* name = dic[@"Name"];
+        
+        if ([name isEqualToString:self.name]) {
+            temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(800, 500, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+            [temp setNameAndLife:name life:[self.playerLife[name] integerValue]];
+            [_playerViews addObject:temp];
+            [self.view addSubview:temp];
+        }
+        else
+        {
+            temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(otherPlayerCount+1) + PLAYER_VIEW_WIDTH*otherPlayerCount, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+            [temp setNameAndLife:name life:[self.playerLife[name] integerValue]];
+            [_playerViews addObject:temp];
+            [self.view addSubview:temp];
+            ++otherPlayerCount;
+        }
+    }
 }
 
 //end by Roger

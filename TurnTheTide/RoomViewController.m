@@ -48,6 +48,8 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     nameLabel.text = [defaults valueForKey:@"Name"];
     roomsTableView.rowHeight = 99;
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
 }
 
 - (void)viewWillAppear:(BOOL)animated

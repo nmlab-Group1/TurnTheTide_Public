@@ -29,6 +29,8 @@
     // Do any additional setup after loading the view.
     GlobalData * globalData = [GlobalData getInstance];
     [globalData.BGM_Main play];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
 }
 
 - (void)didReceiveMemoryWarning

@@ -159,6 +159,11 @@
     [_lifeImageViews addObject:temp];
 }
 
+- (NSString*)getName
+{
+    return _name;
+}
+
 #pragma mark - Event
 
 - (void)hasPlayed:(int)playedWeatherCardNum
