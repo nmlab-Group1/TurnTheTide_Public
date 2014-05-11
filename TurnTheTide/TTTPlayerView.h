@@ -14,6 +14,6 @@
 - (BOOL)setNameAndLife:(NSString *)name life:(int)life;
 - (void)setTide:(int)newTide;
 - (BOOL)loseOneLife;
-
+- (int)getCurrentLifeNum;
 
 @end
