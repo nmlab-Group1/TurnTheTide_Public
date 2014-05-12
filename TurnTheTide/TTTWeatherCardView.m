@@ -12,6 +12,8 @@
 
 @property (nonatomic) int rank;
 @property (nonatomic) double life;
+@property (nonatomic) BOOL isUpsideDown;
+
 @property (nonatomic) BOOL isChosen;
 @property (nonatomic) BOOL isUsed;
 
@@ -39,6 +41,7 @@
     self.backgroundColor = [UIColor colorWithPatternImage: [UIImage imageNamed:@"WeatherCard"]];
     _rank = 0;
     _life = 0;
+    _isUpsideDown = NO;
     _isChosen = NO;
     _isUsed = NO;
     [self initRankLabel];
@@ -103,6 +106,14 @@
         return 0.5;
     }
     return 1;
+}
+
+- (void)becomeUpsideDown
+{
+    _isUpsideDown = YES;
+    [_rankLabel setCenter:CGPointMake(176-18, 276-18)];
+    [_lifeImageView setCenter:CGPointMake(176-18, 240-18)];
+    _lifeImageView.contentMode = UIViewContentModeBottom;
 }
 
 #pragma mark - Activity

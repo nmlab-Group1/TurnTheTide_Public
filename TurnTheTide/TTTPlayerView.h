@@ -20,6 +20,6 @@
 - (NSString*)getName;
 - (int)getCurrentLifeNum;
 - (void)setHasPlayed:(BOOL)hasPlayed;
-- (void)setCardRankAndShow:(int)cardRank;
+- (void)setCardRankAndShow:(int)cardRank upsideDown:(BOOL)upsideDown;
 
 @end

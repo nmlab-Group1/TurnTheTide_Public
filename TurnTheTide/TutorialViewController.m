@@ -120,7 +120,7 @@
         _counter = 1;
     }
     else if (_counter == 1) {
-        [[_playerViews objectAtIndex:1] setCardRankAndShow:34];
+        [[_playerViews objectAtIndex:1] setCardRankAndShow:34 upsideDown:YES];
     }
     
 }

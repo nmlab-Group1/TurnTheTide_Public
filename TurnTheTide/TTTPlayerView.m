@@ -249,10 +249,21 @@
     }
 }
 
-- (void)setCardRankAndShow:(int)cardRank
+- (void)setCardRankAndShow:(int)cardRank upsideDown:(BOOL)upsideDown
 {
     [_weatherCardFront setWithRank:cardRank];
+    if (upsideDown) {
+        [_weatherCardFront becomeUpsideDown];
+    }
+    _weatherCardFront.alpha = 0.0;
     _weatherCardFront.hidden = NO;
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.25];
+    _weatherCardFront.alpha = 1.0;
+    _weatherCardBack.alpha = 0.0;
+    [UIView commitAnimations];
+
     _weatherCardBack.hidden = YES;
 }
 
