@@ -18,6 +18,8 @@
 @property (nonatomic) BOOL hasPlayed;
 @property (nonatomic) BOOL isDead;
 
+@property (strong, nonatomic) UIImageView * weatherCardBack;
+@property (strong, nonatomic) TTTWeatherCardView * weatherCardFront;
 @property (strong, nonatomic) UILabel * nameLabel;
 @property (strong, nonatomic) UIImageView * tideImageView;
 @property (strong, nonatomic) NSMutableArray * lifeImageViews;
@@ -51,9 +53,27 @@
     _hasPlayed = NO;
     _isDead = NO;
     [self setBackgroundColor:[UIColor clearColor]];
+    [self initWeatherCard];
+    
     [self initNameLabel];
     [self initTideImageView];
     [self initLifeImageViews];
+}
+
+- (void)initWeatherCard
+{
+    _weatherCardBack = [[UIImageView alloc] initWithFrame:CGRectMake(4, -60, 192, 288)];
+    _weatherCardBack.contentMode = UIViewContentModeScaleToFill;
+    _weatherCardBack.image = [UIImage imageNamed:@"WeatherCardBack"];
+    _weatherCardBack.alpha = 0.5;
+    _weatherCardBack.hidden = YES;
+    [self addSubview:_weatherCardBack];
+    
+    _weatherCardFront = [[TTTWeatherCardView alloc] initWithFrame:CGRectMake(4, -60, 192, 288)];
+    _weatherCardFront.contentMode = UIViewContentModeScaleToFill;
+    _weatherCardFront.alpha = 0.5;
+    _weatherCardFront.hidden = YES;
+    [self addSubview:_weatherCardFront];
 }
 
 - (void)initNameLabel
@@ -144,13 +164,13 @@
 }
 
 #pragma mark - Event
-
+/*
 - (void)hasPlayed:(int)playedWeatherCardNum
 {
     _playedWeatherCard = playedWeatherCardNum;
     //todo: change background
 }
-
+*/
 - (BOOL)loseOneLife     //check if die
 {
     --_currentLife;
@@ -214,6 +234,26 @@
     
     _tide = newTide;
     }
+}
+
+- (void)setHasPlayed:(BOOL)hasPlayed
+{
+    _hasPlayed = hasPlayed;
+    if (_hasPlayed == YES) {
+        _weatherCardBack.hidden = NO;
+        _weatherCardFront.hidden = YES;
+    }
+    else {
+        _weatherCardBack.hidden = YES;
+        _weatherCardFront.hidden = YES;
+    }
+}
+
+- (void)setCardRankAndShow:(int)cardRank
+{
+    [_weatherCardFront setWithRank:cardRank];
+    _weatherCardFront.hidden = NO;
+    _weatherCardBack.hidden = YES;
 }
 
 /*

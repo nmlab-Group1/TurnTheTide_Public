@@ -17,7 +17,7 @@
 @property (strong, nonatomic) TTTPlayerView *testPlayer;
 @property (strong, nonatomic) NSMutableArray *playerViews;
 
-@property (nonatomic) int stepNum;
+@property (nonatomic) int counter;
 
 @end
 
@@ -46,7 +46,7 @@
     [self initPlayerViews:3];
     NSLog(@"%d", [_playerViews count]);
     
-    _stepNum = 0;
+    _counter = 0;
 }
 
 - (void)initWeatherCards
@@ -113,8 +113,16 @@
 
 - (IBAction)testButton:(UIButton *)sender {
 //    [[_playerViews objectAtIndex:1] loseOneLife];
-    [[_weatherCards objectAtIndex:(arc4random()%HAND_COUNT)] becomeUsedAndHidden];
-    [self updateWeatherCardsPosition];
+//    [[_weatherCards objectAtIndex:(arc4random()%HAND_COUNT)] becomeUsedAndHidden];
+//    [self updateWeatherCardsPosition];
+    if (_counter == 0) {
+        [[_playerViews objectAtIndex:1] setHasPlayed:YES];
+        _counter = 1;
+    }
+    else if (_counter == 1) {
+        [[_playerViews objectAtIndex:1] setCardRankAndShow:34];
+    }
+    
 }
 
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
@@ -189,14 +197,7 @@
     return unplayedCardsCount;
 }
 
-
-
 #pragma mark - Tutorial
-
-- (void)tutorial_weatherCard
-{
-
-}
 
 
 /*

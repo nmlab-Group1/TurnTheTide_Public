@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "TTTParameters.h"
+#import "TTTWeatherCardView.h"
 
 @interface TTTPlayerView : UIView
 
 - (BOOL)setNameAndLife:(NSString *)name life:(int)life;
 - (void)setTide:(int)newTide;
+//- (void)setPlayed;
 - (int)getTide;
 - (BOOL)loseOneLife;
 - (NSString*)getName;
 - (int)getCurrentLifeNum;
+- (void)setHasPlayed:(BOOL)hasPlayed;
+- (void)setCardRankAndShow:(int)cardRank;
 
 @end
