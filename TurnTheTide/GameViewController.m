@@ -399,11 +399,20 @@
                      self.nowAt++;
                      
                      // new round
-                     NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
-                     self.tides1 = dic[@"t1"];
-                     self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
-                     self.tides2 = dic[@"t2"];
-                     self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
+                     if (self.nowAt == 13)
+                     {
+                         [NSThread sleepForTimeInterval:5];
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }
+                     else
+                     {
+                     
+                         NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
+                         self.tides1 = dic[@"t1"];
+                         self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
+                         self.tides2 = dic[@"t2"];
+                         self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
+                     }
                  }
              }];
         }
@@ -446,10 +455,18 @@
             }
             else
             {
-                [temp setCenter:
-                 CGPointMake(72+704*unplayedCardIndex/(unplayedCardCount-1)+96, 672+144)];
-                [temp becomeUnchosen];  //for safety
-                ++unplayedCardIndex;
+                if (unplayedCardCount == 1) {
+                    [temp setCenter:
+                     CGPointMake(512, 672+144)];
+                    [temp becomeUnchosen];  //for safety
+                    break;
+                }
+                else {
+                    [temp setCenter:
+                     CGPointMake(72+704*unplayedCardIndex/(unplayedCardCount-1)+96, 672+144)];
+                    [temp becomeUnchosen];  //for safety
+                    ++unplayedCardIndex;
+                }
             }
         }
     }

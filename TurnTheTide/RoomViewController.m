@@ -17,10 +17,10 @@
 
 @property (strong, nonatomic) Firebase* roomFirebase;
 @property (strong, nonatomic) NSMutableArray* rooms;
-@property (strong, nonatomic) NSMutableArray* localRooms;
 @property (strong, nonatomic) NSMutableArray* roomIDs;
 @property (strong, nonatomic) NSString* selectedRoomID;
 @property (strong, nonatomic) NSMutableDictionary* room;
+@property (strong, nonatomic) NSMutableDictionary* localRooms;
 
 @end
 
@@ -51,12 +51,10 @@
     roomsTableView.rowHeight = 85;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
+    
+    
     self.rooms = [[NSMutableArray alloc] init];
-    localRooms = [[NSMutableArray alloc] init];
+    localRooms = [[NSMutableDictionary alloc] init];
     self.roomIDs = [[NSMutableArray alloc] init];
     self.room = [[NSMutableDictionary alloc] init];
     
@@ -65,9 +63,9 @@
      {
          [self.roomIDs addObject:snapshot.name];
          [self.rooms addObject:snapshot.value];
-         localRooms = self.rooms;
          
          [self.room addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
+         localRooms = self.room;
          
          [self.roomsTableView reloadData];
      }];
@@ -77,10 +75,10 @@
          [self.roomIDs addObject:snapshot.name];
          [self.rooms removeObject:snapshot.value];
          [self.rooms addObject:snapshot.value];
-         localRooms = self.rooms;
          
          [self.room removeObjectForKey:snapshot.name];
          [self.room setValue:snapshot.value forKey:snapshot.name];
+         localRooms = self.room;
          
          [self.roomsTableView reloadData];
      }];
@@ -104,7 +102,7 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[self.room allKeys] count];
+    return [[localRooms allKeys] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,9 +116,8 @@
         cell = [nib objectAtIndex:0];
     }
     
-    NSString* ID = [self.roomIDs objectAtIndex:indexPath.row];
-    NSDictionary* roomContent = self.room[ID];
-    // NSDictionary* roomContent = [localRooms objectAtIndex:indexPath.row];
+    NSString* ID = [[localRooms allKeys] objectAtIndex:indexPath.row];
+    NSDictionary* roomContent = localRooms[ID];
     
     NSString* playerCount = roomContent[@"Player Count"];
     NSString* need = roomContent[@"Need"];
@@ -137,9 +134,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedRoomID = [self.roomIDs objectAtIndex:indexPath.row];
+    self.selectedRoomID = [[localRooms allKeys] objectAtIndex:indexPath.row];
 
-    NSString* roomID = [self.roomIDs objectAtIndex:indexPath.row];
+    NSString* roomID = [[localRooms allKeys] objectAtIndex:indexPath.row];
     NSString* roomNeed = [NSString stringWithFormat:@"/%@/Need", roomID];
     NSString* needPath = [RoomURL stringByAppendingString:roomNeed];
     NSString* playersPath = [NSString stringWithFormat:@"%@/%@/Players", GameURL, roomID];
@@ -196,32 +193,42 @@
 
 - (IBAction)findRoom:(id)sender
 {
-    NSMutableArray* tempArray1 = [[NSMutableArray alloc] init];
-
+    localRooms = self.room;
+    
+    NSMutableDictionary* tempArray1 = [[NSMutableDictionary alloc] init];
+    NSArray* allKeys1 = [localRooms allKeys];
+    // NSLog(@"count %d", [allKeys1 count]);
+    
     if (![[playerCountLabel text] isEqualToString:@"All"])
     {
-        for (NSDictionary* object in self.rooms)
+        for (NSString* key in allKeys1)
         {
-            if ([object[@"Player Count"] isEqualToString:[playerCountLabel text]])
+            NSDictionary* dic = localRooms[key];
+            // NSLog(@"%@", dic[@"Player Count"]);
+            if ([dic[@"Player Count"] isEqualToString:[playerCountLabel text]])
             {
-                [tempArray1 addObject:object];
+                [tempArray1 addEntriesFromDictionary:@{key:localRooms[key]}];
             }
         }
     }
     else
     {
-        tempArray1 = self.rooms;
+        tempArray1 = localRooms;
     }
-
-    NSMutableArray* tempArray2 = [[NSMutableArray alloc] init];
+    
+    NSMutableDictionary* tempArray2 = [[NSMutableDictionary alloc] init];
+    NSArray* allKeys2 = [tempArray1 allKeys];
+    // NSLog(@"count: %d", [allKeys2 count]);
     
     if (![[modeLabel text] isEqualToString:@"All"])
     {
-        for (NSDictionary* object in tempArray1)
+        for (NSString* key in allKeys2)
         {
-            if ([object[@"Mode"] isEqualToString:[modeLabel text]])
+            NSDictionary* dic = tempArray1[key];
+            // NSLog(@"%@", dic[@"Mode"]);
+            if ([dic[@"Mode"] isEqualToString:[modeLabel text]])
             {
-                [tempArray2 addObject:object];
+                [tempArray2 addEntriesFromDictionary:@{key:tempArray1[key]}];
             }
         }
     }
