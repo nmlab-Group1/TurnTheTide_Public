@@ -32,7 +32,6 @@
 @property (strong, nonatomic) NSString* tides1;
 @property (strong, nonatomic) NSString* tides2;
 
-@property (strong, nonatomic) NSMutableArray* playerLabel;
 @property (strong, nonatomic) NSMutableArray *playerViews;
 @property (strong, nonatomic) NSMutableDictionary* playerLife;
 
@@ -87,7 +86,6 @@
     self.players = [[NSMutableArray alloc] init];
     self.myCards = [[NSMutableArray alloc] init];
     self.roundCard = [[NSMutableDictionary alloc] init];
-    self.playerLabel = [[NSMutableArray alloc] init];
     self.tideCards = [[NSMutableArray alloc] init];
     self.deck = [[NSMutableArray alloc] initWithObjects:@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40", @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49", @"50", @"51", @"52", @"53", @"54", @"55", @"56", @"57", @"58", @"59", @"60", nil];
 
@@ -112,20 +110,6 @@
     [playerCountFirebase observeEventType:FEventTypeValue withBlock:^(FDataSnapshot* snapshot)
      {
          self.playerCount = snapshot.value;
-         for (int i=0; i<[self.playerCount integerValue]; i++)
-         {
-             UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 80+i*40, 100, 30)];
-             [nameLabel setText:@"Name"];
-             [self.playerLabel addObject:nameLabel];
-             [self.view addSubview:nameLabel];
-         }
-         for (int i=0; i<[self.playerCount integerValue]; i++)
-         {
-             UILabel* numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 80+i*40, 100, 30)];
-             [numberLabel setText:@"Number"];
-             [self.playerLabel addObject:numberLabel];
-             [self.view addSubview:numberLabel];
-         }
          
          NSString* playersURL = [self.gameRoomURL stringByAppendingString:@"/Players"];
          Firebase* playersFirebase = [[Firebase alloc] initWithUrl:playersURL];
@@ -134,9 +118,6 @@
               [self.players addObject:snapshot.value];
               
               // setup a player here
-              UILabel* nameLabel = [self.playerLabel objectAtIndex:([self.players count]-1)];
-              [nameLabel setText:snapshot.value[@"Name"]];
-              
               __typeof(self) __weak weakSelf = self;
               if ([self.players count] == [self.playerCount integerValue])
               {
@@ -314,15 +295,19 @@
                  [self.roundCard addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
                  
                  // someone's card here
-                 for (int i=0; i<[self.playerCount integerValue]; i++)
+                 
+                 for (TTTPlayerView* playerView in self.playerViews)
                  {
-                     UILabel* label = [self.playerLabel objectAtIndex:i];
-                     if ([[label text] isEqualToString:snapshot.name])
+                     if ([[playerView getName] isEqualToString:snapshot.name])
                      {
-                         // index is now for two players
-                         UILabel* numberLabel = [self.playerLabel objectAtIndex:(i+[self.playerCount integerValue])];
-                         [numberLabel setText:snapshot.value];
-                         break;
+                         if ([snapshot.name isEqualToString:self.name])
+                         {
+                             [playerView setCardRankAndShow:[snapshot.value integerValue] upsideDown:NO];
+                         }
+                         else
+                         {
+                             [playerView setCardRankAndShow:[snapshot.value integerValue] upsideDown:YES];
+                         }
                      }
                  }
                  

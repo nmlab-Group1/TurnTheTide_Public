@@ -62,14 +62,14 @@
 
 - (void)initWeatherCard
 {
-    _weatherCardBack = [[UIImageView alloc] initWithFrame:CGRectMake(4, -60, 192, 288)];
+    _weatherCardBack = [[UIImageView alloc] initWithFrame:CGRectMake(4, -80, 192, 288)];
     _weatherCardBack.contentMode = UIViewContentModeScaleToFill;
     _weatherCardBack.image = [UIImage imageNamed:@"WeatherCardBack"];
     _weatherCardBack.alpha = 0.5;
     _weatherCardBack.hidden = YES;
     [self addSubview:_weatherCardBack];
     
-    _weatherCardFront = [[TTTWeatherCardView alloc] initWithFrame:CGRectMake(4, -60, 192, 288)];
+    _weatherCardFront = [[TTTWeatherCardView alloc] initWithFrame:CGRectMake(4, -80, 192, 288)];
     _weatherCardFront.contentMode = UIViewContentModeScaleToFill;
     _weatherCardFront.alpha = 0.5;
     _weatherCardFront.hidden = YES;
