@@ -41,6 +41,10 @@
 @property (weak, atomic) TTTWeatherCardView *chosenCard;
 @property (strong, nonatomic) UISwipeGestureRecognizer * tempRecog;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingImage;
+@property (weak, nonatomic) IBOutlet UILabel *connectingLabel;
+@property (nonatomic) BOOL canPlay;
+
 //end by Roger
 
 @end
@@ -65,13 +69,10 @@
     GlobalData * globalData = [GlobalData getInstance];
     [globalData.BGM_Main stop];
     [globalData.BGM_Game play];
-    
-    //create weather cards and link to gesture recognizer by Roger
-    [self initWeatherCards];
-    [self initGestureOfWeatherCards];
-    
+
     self.nowAt = 1;
     self.sendTo = @"1";
+    _canPlay = NO;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
 }
@@ -199,6 +200,14 @@
 {
     self.myCards = [self.myCards sortedArrayUsingSelector:@selector(compare:)];
     
+    [_loadingImage setHidden:YES];
+    [_connectingLabel setHidden:YES];
+    _canPlay = YES;
+    
+    //create weather cards and link to gesture recognizer by Roger
+    [self initWeatherCards];
+    [self initGestureOfWeatherCards];
+    
     double tLife = 0;
     for (NSInteger i=0; i<12; ++i)
     {
@@ -272,7 +281,9 @@
 }
 
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
-    if ([(TTTWeatherCardView *)sender.view becomeChosen]) {
+    if (!_canPlay) {
+    }
+    else if ([(TTTWeatherCardView *)sender.view becomeChosen]) {
         if (_chosenCard != nil) {
             if (![_chosenCard isUsed]) {
                 [_chosenCard becomeUnchosen];
@@ -282,6 +293,8 @@
     }
     else {
         // send card here
+        _canPlay = NO;
+        
         if (self.nowAt == [self.sendTo integerValue])
         {
             NSString* roundURL = [NSString stringWithFormat:@"%@/Rounds/%d", self.gameRoomURL, self.nowAt];
@@ -369,35 +382,57 @@
                      
                      NSLog(@"  %d", tide);
                      
-                     for (TTTPlayerView* playerView in self.playerViews)
-                     {
-                         if ([playerView getTide] == tide)
+                     //delay a few seconds
+                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                         for (TTTPlayerView* playerView in self.playerViews)
                          {
-                             [playerView loseOneLife];
+                             if ([playerView getTide] == tide)
+                             {
+                                 [playerView loseOneLife];
+                             }
                          }
-                     }
                      
-                     [self.roundCard removeAllObjects];
-                     [sendToRound removeAllObservers];
+                         [self.roundCard removeAllObjects];
+                         [sendToRound removeAllObservers];
                      
                      
-                     self.nowAt++;
-                     
-                     // new round
-                     if (self.nowAt == 13)
-                     {
-                         [NSThread sleepForTimeInterval:5];
-                         [self.navigationController popViewControllerAnimated:YES];
-                     }
-                     else
-                     {
-                     
-                         NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
-                         self.tides1 = dic[@"t1"];
-                         self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
-                         self.tides2 = dic[@"t2"];
-                         self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
-                     }
+                         self.nowAt++;
+                         
+                         //reset playerViews' played card
+                         for (int i = 0; i < [_playerCount integerValue]; ++i) {
+                             [[_playerViews objectAtIndex:i] setHasPlayed:NO];
+                         }
+                         
+                         // new round
+                         if (self.nowAt == 13)
+                         {
+                             [NSThread sleepForTimeInterval:5];
+                             [self.navigationController popViewControllerAnimated:YES];
+                         }
+                         else
+                         {
+                             //delay a few seconds
+                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                 
+                                 NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
+                                 self.tides1 = dic[@"t1"];
+                                 self.tides2 = dic[@"t2"];
+                                 [_tide1 setAlpha:0.0];
+                                 [_tide2 setAlpha:0.0];
+                                 self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
+                                 self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
+                                 
+                                 [UIView animateWithDuration:0.5 animations:^{
+                                     [_tide1 setAlpha:1.0];
+                                     [_tide2 setAlpha:1.0];
+                                 }];
+                                 
+                                 _canPlay = YES;
+                             });
+                         }
+                    });
                  }
              }];
         }

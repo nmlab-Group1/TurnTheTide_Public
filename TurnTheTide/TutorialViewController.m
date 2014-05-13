@@ -112,9 +112,11 @@
 #pragma mark - methods
 
 - (IBAction)testButton:(UIButton *)sender {
-//    [[_playerViews objectAtIndex:1] loseOneLife];
+    [[_playerViews objectAtIndex:1] loseOneLife];
+//    [[_playerViews objectAtIndex:1] setTide:12];
 //    [[_weatherCards objectAtIndex:(arc4random()%HAND_COUNT)] becomeUsedAndHidden];
 //    [self updateWeatherCardsPosition];
+/*
     if (_counter == 0) {
         [[_playerViews objectAtIndex:1] setHasPlayed:YES];
         _counter = 1;
@@ -122,7 +124,7 @@
     else if (_counter == 1) {
         [[_playerViews objectAtIndex:1] setCardRankAndShow:34 upsideDown:YES];
     }
-    
+*/
 }
 
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {

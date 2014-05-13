@@ -178,30 +178,27 @@
         return NO;
     //animation
     TTTPlayerView *temp = [_lifeImageViews objectAtIndex:_currentLife];
-/*
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.2];
-//    [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
-    temp.Alpha = 0.1;
-    [UIView commitAnimations];
-*/
-/*
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.2];
-    [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
-    [UIView commitAnimations];
-*/
-    [UIView beginAnimations:nil context:UIGraphicsGetCurrentContext()];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:temp cache:YES];
-    [temp setAlpha:0.1];
-    [UIView commitAnimations];
-/*
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.2];
-    [temp setFrame:CGRectMake(temp.frame.origin.x + 16, temp.frame.origin.y + 16, 32, 32)];
-    [UIView commitAnimations];
-*/
+    
+    [UIView animateWithDuration:0.25
+        delay:0.0
+        options:UIViewAnimationOptionCurveEaseOut
+        animations:^{
+            [temp setFrame:CGRectMake(temp.frame.origin.x - 32, temp.frame.origin.y - 32, 96, 96)];
+        }
+        completion:^(BOOL finished){
+
+            [UIView animateWithDuration:0.25
+                delay:0.0
+                options:UIViewAnimationOptionCurveEaseIn
+                animations:^{
+                    [temp setFrame:CGRectMake(temp.frame.origin.x + 32, temp.frame.origin.y + 32, 32, 32)];
+                    [temp setAlpha:0.1];
+                }
+                completion:nil
+            ];
+
+        }
+    ];
     return YES;
 }
 
@@ -209,31 +206,51 @@
 {
     if (newTide >= 0 && newTide <= TIDE_MAX)
     {
-    //animation
-    if (newTide > _tide)
-    {
-/*        for (int i = _tide + 1; i < newTide; ++i) {
-            [UIView beginAnimations:nil context:nil];
-            [UIView setAnimationDuration:10];
-            _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", i]];
-            [UIView commitAnimations];
-            
+        //animation
+        [self tideAnimation:_tide targetTide:newTide];
+        _tide = newTide;
+    }
+}
+
+- (void)tideAnimation: (int)currentTide targetTide:(int)targetTide
+{
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.125*NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", currentTide]];
+        if (currentTide < targetTide) {
+            [self tideAnimation:(currentTide+1) targetTide:targetTide];
         }
-*/        _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", newTide]];
-    }
-    
-    if (newTide < _tide)
-    {
-/*        for (int i = _tide - 1; i > newTide; --i) {
-            _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", i]];
-            //sleep(2);
-            //[NSThread sleepForTimeInterval:0.1f];
+        else if (currentTide > targetTide) {
+            [self tideAnimation:(currentTide-1) targetTide:targetTide];
         }
-*/        _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", newTide]];
+    });
+/*
+    _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", currentTide]];
+    [NSThread sleepForTimeInterval:1];
+    if (currentTide < targetTide) {
+        [self tideAnimation:(currentTide+1) targetTide:targetTide];
     }
-    
-    _tide = newTide;
+    else if (currentTide > targetTide) {
+        [self tideAnimation:(currentTide-1) targetTide:targetTide];
     }
+ */
+/*
+    [UIView animateWithDuration:10
+        delay:10
+        options:UIViewAnimationOptionCurveLinear
+        animations:^{
+            _tideImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", currentTide]];
+        }
+        completion:^(BOOL finished){
+            if (currentTide < targetTide) {
+                [self tideAnimation:(currentTide+1) targetTide:targetTide];
+            }
+            else if (currentTide > targetTide) {
+                [self tideAnimation:(currentTide-1) targetTide:targetTide];
+            }
+        }
+    ];
+*/
 }
 
 - (void)setHasPlayed:(BOOL)hasPlayed
@@ -244,8 +261,14 @@
         _weatherCardFront.hidden = YES;
     }
     else {
+        [UIView animateWithDuration:0.5 animations:^{
+            [_weatherCardBack setAlpha:0.0];
+            [_weatherCardFront setAlpha:0.0];
+        }];
         _weatherCardBack.hidden = YES;
         _weatherCardFront.hidden = YES;
+        [_weatherCardBack setAlpha:1.0];
+        [_weatherCardFront setAlpha:1.0];
     }
 }
 
@@ -275,5 +298,32 @@
     // Drawing code
 }
 */
+
+/*
+ [UIView beginAnimations:nil context:nil];
+ [UIView setAnimationDuration:0.2];
+ //    [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
+ temp.Alpha = 0.1;
+ [UIView commitAnimations];
+ */
+/*
+ [UIView beginAnimations:nil context:nil];
+ [UIView setAnimationDuration:0.2];
+ [temp setFrame:CGRectMake(temp.frame.origin.x - 16, temp.frame.origin.y - 16, 64, 64)];
+ [UIView commitAnimations];
+ */
+/*
+ [UIView beginAnimations:nil context:UIGraphicsGetCurrentContext()];
+ [UIView setAnimationDuration:0.25];
+ [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:temp cache:YES];
+ [temp setAlpha:0.1];
+ [UIView commitAnimations];
+ */
+/*
+ [UIView beginAnimations:nil context:nil];
+ [UIView setAnimationDuration:0.2];
+ [temp setFrame:CGRectMake(temp.frame.origin.x + 16, temp.frame.origin.y + 16, 32, 32)];
+ [UIView commitAnimations];
+ */
 
 @end
