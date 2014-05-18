@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL hasPlayed;
 @property (nonatomic) BOOL isDead;
 
+@property (strong, nonatomic) UIImageView * background;
 @property (strong, nonatomic) UIImageView * weatherCardBack;
 @property (strong, nonatomic) TTTWeatherCardView * weatherCardFront;
 @property (strong, nonatomic) UILabel * nameLabel;
@@ -53,7 +54,9 @@
     _hasPlayed = NO;
     _isDead = NO;
     [self setBackgroundColor:[UIColor clearColor]];
+    
     [self initWeatherCard];
+    [self initBackground];
     
     [self initNameLabel];
     [self initTideImageView];
@@ -72,6 +75,14 @@
     _weatherCardFront.contentMode = UIViewContentModeScaleToFill;
     _weatherCardFront.alpha = 0.0;
     [self addSubview:_weatherCardFront];
+}
+
+- (void)initBackground
+{
+    _background = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+    _background.backgroundColor = [UIColor whiteColor];
+    _background.alpha = 0.5;
+    [self addSubview:_background];
 }
 
 - (void)initNameLabel
@@ -176,8 +187,8 @@
     --_currentLife;
     
     //animation
+//    _background.backgroundColor = [UIColor redColor];
     TTTPlayerView *temp = [_lifeImageViews objectAtIndex:_currentLife];
-    
     [UIView animateWithDuration:0.25
         delay:0.0
         options:UIViewAnimationOptionCurveEaseOut
@@ -198,11 +209,37 @@
 
         }
     ];
-    return YES;
+/*
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0*NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        _background.backgroundColor = [UIColor whiteColor];
+    });
+*/    return YES;
 }
 
 - (void)setTide:(int)newTide
 {
+    if (newTide >= 0 && newTide <= TIDE_MAX)
+    {
+        //animation
+        [self tideAnimation:_tide targetTide:newTide];
+        _tide = newTide;
+    }
+}
+
+- (void)setTideWithOrder:(int)newTide order:(int)order
+{
+    if (newTide >= 0 && newTide <= TIDE_MAX)
+    {
+        //animation
+        [self tideAnimation:_tide targetTide:newTide];
+        _tide = newTide;
+    }
+}
+
+- (void)setTideWithNSN:(NSNumber *)newTideNSN
+{
+    int newTide = [newTideNSN integerValue];
     if (newTide >= 0 && newTide <= TIDE_MAX)
     {
         //animation

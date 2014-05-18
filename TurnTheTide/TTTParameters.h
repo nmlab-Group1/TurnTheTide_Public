@@ -27,6 +27,6 @@
 #define HAND_COUNT 12
 
 #define PLAYER_VIEW_WIDTH 200
-#define PLAYER_VIEW_HEIGHT 228
+#define PLAYER_VIEW_HEIGHT 128
 
 #endif

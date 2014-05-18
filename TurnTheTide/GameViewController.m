@@ -304,7 +304,7 @@
     }
 }
 
-#pragma mark - interface
+#pragma mark - interact
 
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
     if (!_canPlay) {
@@ -404,7 +404,7 @@
                  }
              }
              //delay a few seconds
-             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0*NSEC_PER_SEC);
              dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                  
                  int maxTide = -1;
@@ -412,11 +412,18 @@
                  {
                      if ([[playerView getName] isEqualToString:firstS])
                      {
-                         [playerView setTide:tideSmall];
+                             [playerView setTide:tideSmall];
+//                         [playerView performSelector:@selector(setTideWithNSN:)
+//                                          withObject:[NSNumber numberWithInt:tideSmall]
+//                                          afterDelay:0.0];
                      }
                      else if ([[playerView getName] isEqualToString:secondS])
                      {
-                         [playerView setTide:tideBig];
+                             [playerView setTide:tideBig];
+//                         [playerView performSelector:@selector(setTideWithNSN:)
+//                                          withObject:[NSNumber numberWithInt:tideBig]
+//                                          afterDelay:1.5];
+
                      }
                      
                      NSLog(@"%d", [playerView getTide]);
@@ -428,7 +435,7 @@
                  NSLog(@"  %d", maxTide);
                  
                  //delay a few seconds
-                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0*NSEC_PER_SEC);
                  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                      for (TTTPlayerView* playerView in self.playerViews)
                      {
@@ -450,36 +457,51 @@
                      }
                      
                      //delay a few seconds
-                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0*NSEC_PER_SEC);
                      dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                          
                          // new round
-                         if (self.nowAt == 13)
+                         if (self.nowAt >= 13)
                          {
                              [self showResult];
                          }
                          else
                          {
-                             NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
-                             self.tides1 = dic[@"t1"];
-                             self.tides2 = dic[@"t2"];
-                             [_tide1 setAlpha:0.0];
-                             [_tide2 setAlpha:0.0];
-                             self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
-                             self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
-                             
-                             [UIView animateWithDuration:0.5 animations:^{
-                                 [_tide1 setAlpha:1.0];
-                                 [_tide2 setAlpha:1.0];
-                             }];
-                             
-                             _canPlay = YES;
+                             [self newRound];
                          }
                      });
                  });
              });
          }
      }];
+}
+
+- (void)updateTide:(NSInteger)tideSmall tideBig:(NSInteger)tideBig
+{
+
+}
+
+- (void)setPlayerTide:(TTTPlayerView *)playerView tide:(int)newTide
+{
+    [playerView setTide:newTide];
+}
+
+- (void)newRound
+{
+    NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
+    self.tides1 = dic[@"t1"];
+    self.tides2 = dic[@"t2"];
+    [_tide1 setAlpha:0.0];
+    [_tide2 setAlpha:0.0];
+    self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
+    self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [_tide1 setAlpha:1.0];
+        [_tide2 setAlpha:1.0];
+    }];
+    
+    _canPlay = YES;
 }
 
 - (void)setUsedCard  //call this when chosen card is played
@@ -554,7 +576,7 @@
     
     UILabel *resultLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 16, 512, 48)];
     resultLabel.text = @"Result";
-    resultLabel.textColor = [UIColor whiteColor];
+    resultLabel.textColor = [UIColor yellowColor];
     resultLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
     resultLabel.textAlignment = NSTextAlignmentCenter;
     [resultBoard addSubview:resultLabel];
@@ -563,7 +585,7 @@
     //[[UIButton alloc] initWithFrame:CGRectMake(0, 448, 256, 64)];
     yesButton.frame = CGRectMake(0, 448, 256, 64);
     [yesButton setTitle:@"OK" forState:UIControlStateNormal];
-    [yesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yesButton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
     yesButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
     [yesButton addTarget:self
                   action:@selector(endGame:)
@@ -572,7 +594,7 @@
     
     UIButton *noButton = [[UIButton alloc] initWithFrame:CGRectMake(256, 448, 256, 64)];
     [noButton setTitle:@"Damn It" forState:UIControlStateNormal];
-    [noButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [noButton setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
     noButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
     [noButton addTarget:self
                  action:@selector(endGame:)

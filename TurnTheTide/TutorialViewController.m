@@ -17,6 +17,9 @@
 @property (strong, nonatomic) TTTPlayerView *testPlayer;
 @property (strong, nonatomic) NSMutableArray *playerViews;
 
+@property (strong, nonatomic) UIImageView *tide1;
+@property (strong, nonatomic) UIImageView *tide2;
+
 @property (nonatomic) int counter;
 
 @end
@@ -43,19 +46,22 @@
     [self initWeatherCards];
     [self initGestureOfWeatherCards];
     
-    [self initPlayerViews:3];
-    [self setSelfView];
-    [[_playerViews objectAtIndex:3] setCardRankAndShow:3 upsideDown:NO];
-    NSLog(@"%d", [_playerViews count]);
+    [self initPlayerViews];
+    [self initSelfView];
+    [self initTide];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
     
     _counter = 0;
 }
 
 - (void)initWeatherCards
 {
+    int cardNums[12] = {1,4,13,15,23, 26,33,34,40,43, 51,60};
     _weatherCards = [[NSMutableArray alloc] init];
     for (int i = 0; i < HAND_COUNT; ++i) {
         TTTWeatherCardView* tempCard = [[TTTWeatherCardView alloc] initWithFrame:CGRectMake(72+64*i, 672, 192, 288)];
+        [tempCard setWithRank:cardNums[i]];
         [self.view addSubview:tempCard];
         [_weatherCards addObject:tempCard];
     }
@@ -75,19 +81,45 @@
     }
 }
 
-- (void)initPlayerViews:(int)playerCount
+- (void)initPlayerViews
 {
+    int playerCount = 3;
     int intervalX = (1024 - playerCount * PLAYER_VIEW_WIDTH)/(playerCount+1);
     int offsetY = 16;
     
     _playerViews = [[NSMutableArray alloc] init];
     
+    TTTPlayerView *temp;
     for (int i = 0; i < playerCount; ++i) {
-        TTTPlayerView *temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(i+1) + PLAYER_VIEW_WIDTH*i, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
-        [temp setNameAndLife:@"test player" life:10];
+        temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(i+1) + PLAYER_VIEW_WIDTH*i, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
         [_playerViews addObject:temp];
         [self.view addSubview:temp];
     }
+
+    [[_playerViews objectAtIndex:0] setNameAndLife:@"player 1" life:4];
+    [[_playerViews objectAtIndex:1] setNameAndLife:@"player 2" life:6];
+    [[_playerViews objectAtIndex:2] setNameAndLife:@"player 3" life:3];
+//    [[_playerViews objectAtIndex:3] setNameAndLife:@"player 4" life:5];
+}
+
+- (void)initSelfView
+{
+    TTTPlayerView * temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(800, 400, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+    [temp setNameAndLife:@"self" life:5];
+    [_playerViews addObject:temp];
+    [self.view addSubview:temp];
+}
+
+- (void)initTide
+{
+    _tide1 = [[UIImageView alloc]initWithFrame:CGRectMake(289, 256, 192, 256)];
+    _tide2 = [[UIImageView alloc]initWithFrame:CGRectMake(543, 256, 192, 256)];
+    
+    _tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", 1]];
+    _tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%d", 12]];
+    
+    [self.view addSubview:_tide1];
+    [self.view addSubview:_tide2];
 }
 
 #pragma mark - terminate
@@ -266,14 +298,6 @@
     }];
 }
 
-- (void)setSelfView
-{
-    TTTPlayerView * temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(800, 400, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
-    [temp setNameAndLife:@"self" life:9];
-    [_playerViews addObject:temp];
-    [self.view addSubview:temp];
-}
-
 - (IBAction)endGame:(UIButton *)sender {
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -288,13 +312,18 @@
 //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 
 //    });
-
-    [self performSelector:@selector(back:) withObject:nil afterDelay:5.0];
+    [self performSelector:@selector(setBackGround) withObject:nil afterDelay:4.0];
+    [self performSelector:@selector(back) withObject:nil afterDelay:5.0];
 }
 
 -(void)back
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)setBackGround
+{
+    [self.view setBackgroundColor:[UIColor blackColor]];
 }
 
 #pragma mark - Tutorial

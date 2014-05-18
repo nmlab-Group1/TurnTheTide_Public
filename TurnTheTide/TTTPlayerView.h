@@ -14,6 +14,7 @@
 
 - (BOOL)setNameAndLife:(NSString *)name life:(int)life;
 - (void)setTide:(int)newTide;
+- (void)setTideWithNSN:(NSNumber *)newTideNSN;
 //- (void)setPlayed;
 - (int)getTide;
 - (BOOL)loseOneLife;
