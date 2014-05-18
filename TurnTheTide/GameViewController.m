@@ -51,6 +51,8 @@
 
 @implementation GameViewController
 
+#pragma mark - initialize and terminate
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -122,6 +124,7 @@
               __typeof(self) __weak weakSelf = self;
               if ([self.players count] == [self.playerCount integerValue])
               {
+                  _connectingLabel.text = @"Dealing Cards...";
                   [weakSelf assignDeck];
               }
           }];
@@ -130,6 +133,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+    //change BGM back to BGM_Main
     GlobalData * globalData = [GlobalData getInstance];
     [globalData.BGM_Game stop];
     [globalData.BGM_Main play];
@@ -209,9 +213,10 @@
     [self initGestureOfWeatherCards];
     
     double tLife = 0;
+    TTTWeatherCardView* card;
     for (NSInteger i=0; i<12; ++i)
     {
-        TTTWeatherCardView* card = [_weatherCards objectAtIndex:i];
+        card = [_weatherCards objectAtIndex:i];
         [card setWithRank:[[self.myCards objectAtIndex:i] integerValue]];
         // convert rank to life
         tLife += [card getLife];
@@ -242,20 +247,6 @@
     self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
 }
 
-- (void)cardPicked:(UIButton*)button
-{
-    
-}
-
-//by Roger
-/*
-- (void)viewDidLayoutSubviews
-{
-    for (int i = 0; i < 12; ++i) {
-        [[_weatherCards objectAtIndex:i] setCenter:CGPointMake(72+96+64*i, 672+144)];
-    }
-}
-*/
 - (void)initWeatherCards
 {
     _weatherCards = [[NSMutableArray alloc] init];
@@ -280,6 +271,41 @@
     }
 }
 
+
+- (void)initPlayerViews
+{
+    int playerCount = [self.playerCount integerValue];
+    int intervalX = (1024 - (playerCount-1) * PLAYER_VIEW_WIDTH)/(playerCount);
+    int offsetY = 16;
+    int otherPlayerCount = 0;
+    
+    _playerViews = [[NSMutableArray alloc] init];
+    TTTPlayerView *temp;
+    NSDictionary* dic;
+    NSString* name;
+    for (int i = 0; i < playerCount; ++i) {
+        dic = [self.players objectAtIndex:i];
+        name = dic[@"Name"];
+        
+        if ([name isEqualToString:self.name]) {
+            temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(800, 400, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+            [temp setNameAndLife:name life:[self.playerLife[name] integerValue]];
+            [_playerViews addObject:temp];
+            [self.view addSubview:temp];
+        }
+        else
+        {
+            temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(otherPlayerCount+1) + PLAYER_VIEW_WIDTH*otherPlayerCount, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
+            [temp setNameAndLife:name life:[self.playerLife[name] integerValue]];
+            [_playerViews addObject:temp];
+            [self.view addSubview:temp];
+            ++otherPlayerCount;
+        }
+    }
+}
+
+#pragma mark - interface
+
 - (IBAction)swipeUp:(UISwipeGestureRecognizer *)sender {
     if (!_canPlay) {
     }
@@ -292,149 +318,11 @@
         _chosenCard = (TTTWeatherCardView *)sender.view;
     }
     else {
-        // send card here
         _canPlay = NO;
-        
+        // send card here
         if (self.nowAt == [self.sendTo integerValue])
         {
-            NSString* roundURL = [NSString stringWithFormat:@"%@/Rounds/%d", self.gameRoomURL, self.nowAt];
-            Firebase* sendToRound = [[Firebase alloc] initWithUrl:roundURL];
-            [sendToRound updateChildValues:@{self.name:[NSString stringWithFormat:@"%d", [_chosenCard getRank]]}];
-            [self setUsedCard];
-            self.sendTo = [@([self.sendTo integerValue] + 1) stringValue];
-            
-            [sendToRound observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
-             {
-                 [self.roundCard addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
-                 
-                 // someone's card here
-                 
-                 for (TTTPlayerView* playerView in self.playerViews)
-                 {
-                     if ([[playerView getName] isEqualToString:snapshot.name])
-                     {
-                         if ([snapshot.name isEqualToString:self.name])
-                         {
-                             [playerView setCardRankAndShow:[snapshot.value integerValue] upsideDown:NO];
-                         }
-                         else
-                         {
-                             [playerView setCardRankAndShow:[snapshot.value integerValue] upsideDown:YES];
-                         }
-                     }
-                 }
-                 
-                 if ([[self.roundCard allKeys] count] == [self.playerCount integerValue])
-                 {
-                     // assign tide here
-                     NSInteger tideBig, tideSmall;
-                     tideBig = tideSmall = [self.tides1 integerValue];
-                     if ([self.tides2 integerValue] > tideBig)
-                     {
-                         tideBig = [self.tides2 integerValue];
-                     }
-                     else
-                     {
-                         tideSmall = [self.tides2 integerValue];
-                     }
-                     
-                     NSInteger first = 0, second = 0;
-                     NSString *firstS, *secondS;
-                     firstS = [[NSString alloc] init];
-                     secondS = [[NSString alloc] init];
-                     for (NSInteger i=0; i<[self.players count]; i++)
-                     {
-                         NSDictionary* dic = [self.players objectAtIndex:i];
-                         NSString* thisName = dic[@"Name"];
-                         
-                         NSInteger thisNum = [self.roundCard[thisName] integerValue];
-                         if (thisNum > first)
-                         {
-                             second = first;
-                             secondS = firstS;
-                             first = thisNum;
-                             firstS = thisName;
-                         }
-                         else if (thisNum > second)
-                         {
-                             second = thisNum;
-                             secondS = thisName;
-                         }
-                     }
-                     
-                     int tide = -1;
-                     for (TTTPlayerView* playerView in self.playerViews)
-                     {
-                         if ([[playerView getName] isEqualToString:firstS])
-                         {
-                             [playerView setTide:tideSmall];
-                         }
-                         else if ([[playerView getName] isEqualToString:secondS])
-                         {
-                             [playerView setTide:tideBig];
-                         }
-                         
-                         NSLog(@"%d", [playerView getTide]);
-                         
-                         if ([playerView getTide] > tide)
-                             tide = [playerView getTide];
-                     }
-                     
-                     NSLog(@"  %d", tide);
-                     
-                     //delay a few seconds
-                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
-                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                         for (TTTPlayerView* playerView in self.playerViews)
-                         {
-                             if ([playerView getTide] == tide)
-                             {
-                                 [playerView loseOneLife];
-                             }
-                         }
-                     
-                         [self.roundCard removeAllObjects];
-                         [sendToRound removeAllObservers];
-                     
-                     
-                         self.nowAt++;
-                         
-                         //reset playerViews' played card
-                         for (int i = 0; i < [_playerCount integerValue]; ++i) {
-                             [[_playerViews objectAtIndex:i] setHasPlayed:NO];
-                         }
-                         
-                         // new round
-                         if (self.nowAt == 13)
-                         {
-                             [NSThread sleepForTimeInterval:5];
-                             [self.navigationController popViewControllerAnimated:YES];
-                         }
-                         else
-                         {
-                             //delay a few seconds
-                             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
-                             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                 
-                                 NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
-                                 self.tides1 = dic[@"t1"];
-                                 self.tides2 = dic[@"t2"];
-                                 [_tide1 setAlpha:0.0];
-                                 [_tide2 setAlpha:0.0];
-                                 self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
-                                 self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
-                                 
-                                 [UIView animateWithDuration:0.5 animations:^{
-                                     [_tide1 setAlpha:1.0];
-                                     [_tide2 setAlpha:1.0];
-                                 }];
-                                 
-                                 _canPlay = YES;
-                             });
-                         }
-                    });
-                 }
-             }];
+            [self playCard];
         }
     }
 }
@@ -445,6 +333,153 @@
         _chosenCard = nil;
         //todo: send cancel message to server
     }
+}
+
+#pragma mark - implementation
+
+- (void)playCard
+{
+    NSString* roundURL = [NSString stringWithFormat:@"%@/Rounds/%d", self.gameRoomURL, self.nowAt];
+    Firebase* sendToRound = [[Firebase alloc] initWithUrl:roundURL];
+    [sendToRound updateChildValues:@{self.name:[NSString stringWithFormat:@"%d", [_chosenCard getRank]]}];
+    [self setUsedCard];
+    self.sendTo = [@([self.sendTo integerValue] + 1) stringValue];
+    
+    [sendToRound observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot* snapshot)
+     {
+         [self.roundCard addEntriesFromDictionary:@{snapshot.name:snapshot.value}];
+         
+         // someone's card here
+         
+         for (TTTPlayerView* playerView in self.playerViews)
+         {
+             if ([[playerView getName] isEqualToString:snapshot.name])
+             {
+                 if ([snapshot.name isEqualToString:self.name])
+                 {
+                     [playerView setCardRankAndShow:[snapshot.value integerValue] upsideDown:NO];
+                 }
+                 else
+                 {
+                     [playerView setCardRankAndShow:[snapshot.value integerValue] upsideDown:YES];
+                 }
+             }
+         }
+         
+         if ([[self.roundCard allKeys] count] == [self.playerCount integerValue])
+         {
+             // assign tide here
+             NSInteger tideBig, tideSmall;
+             tideBig = tideSmall = [self.tides1 integerValue];
+             if ([self.tides2 integerValue] > tideBig)
+             {
+                 tideBig = [self.tides2 integerValue];
+             }
+             else
+             {
+                 tideSmall = [self.tides2 integerValue];
+             }
+             
+             NSInteger first = 0, second = 0;
+             NSString *firstS, *secondS;
+             firstS = [[NSString alloc] init];
+             secondS = [[NSString alloc] init];
+             for (NSInteger i=0; i<[self.players count]; i++)
+             {
+                 NSDictionary* dic = [self.players objectAtIndex:i];
+                 NSString* thisName = dic[@"Name"];
+                 
+                 NSInteger thisNum = [self.roundCard[thisName] integerValue];
+                 if (thisNum > first)
+                 {
+                     second = first;
+                     secondS = firstS;
+                     first = thisNum;
+                     firstS = thisName;
+                 }
+                 else if (thisNum > second)
+                 {
+                     second = thisNum;
+                     secondS = thisName;
+                 }
+             }
+             //delay a few seconds
+             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                 
+                 int maxTide = -1;
+                 for (TTTPlayerView* playerView in self.playerViews)
+                 {
+                     if ([[playerView getName] isEqualToString:firstS])
+                     {
+                         [playerView setTide:tideSmall];
+                     }
+                     else if ([[playerView getName] isEqualToString:secondS])
+                     {
+                         [playerView setTide:tideBig];
+                     }
+                     
+                     NSLog(@"%d", [playerView getTide]);
+                     
+                     if ([playerView getTide] > maxTide)
+                         maxTide = [playerView getTide];
+                 }
+                 
+                 NSLog(@"  %d", maxTide);
+                 
+                 //delay a few seconds
+                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                     for (TTTPlayerView* playerView in self.playerViews)
+                     {
+                         if ([playerView getTide] == maxTide)
+                         {
+                             [playerView loseOneLife];
+                         }
+                     }
+                     
+                     [self.roundCard removeAllObjects];
+                     [sendToRound removeAllObservers];
+                     
+                     
+                     self.nowAt++;
+                     
+                     //reset playerViews' played card
+                     for (int i = 0; i < [_playerCount integerValue]; ++i) {
+                         [[_playerViews objectAtIndex:i] setHasPlayed:NO];
+                     }
+                     
+                     //delay a few seconds
+                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.5*NSEC_PER_SEC);
+                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                         
+                         // new round
+                         if (self.nowAt == 13)
+                         {
+                             [self showResult];
+                         }
+                         else
+                         {
+                             NSDictionary* dic = [self.tideCards objectAtIndex:(self.nowAt-1)];
+                             self.tides1 = dic[@"t1"];
+                             self.tides2 = dic[@"t2"];
+                             [_tide1 setAlpha:0.0];
+                             [_tide2 setAlpha:0.0];
+                             self.tide1.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides1]];
+                             self.tide2.image = [UIImage imageNamed:[NSString stringWithFormat:@"TideCard_%@", self.tides2]];
+                             
+                             [UIView animateWithDuration:0.5 animations:^{
+                                 [_tide1 setAlpha:1.0];
+                                 [_tide2 setAlpha:1.0];
+                             }];
+                             
+                             _canPlay = YES;
+                         }
+                     });
+                 });
+             });
+         }
+     }];
 }
 
 - (void)setUsedCard  //call this when chosen card is played
@@ -476,8 +511,7 @@
             else
             {
                 if (unplayedCardCount == 1) {
-                    [temp setCenter:
-                     CGPointMake(512, 672+144)];
+                    [temp setCenter:CGPointMake(512, 672+144)];
                     [temp becomeUnchosen];  //for safety
                     break;
                 }
@@ -507,36 +541,89 @@
     return unplayedCardsCount;
 }
 
-- (void)initPlayerViews
+- (void)showResult  //with end game buttons
 {
-    int playerCount = [self.playerCount integerValue];
-    int intervalX = (1024 - (playerCount-1) * PLAYER_VIEW_WIDTH)/(playerCount);
-    int offsetY = 16;
-    int otherPlayerCount = 0;
-    _playerViews = [[NSMutableArray alloc] init];
-    TTTPlayerView *temp;
+    UIView *resultView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    [resultView setBackgroundColor:[UIColor blackColor]];
+    [resultView setAlpha:0.5];
     
-    for (int i = 0; i < playerCount; ++i) {
-        NSDictionary* dic = [self.players objectAtIndex:i];
-        NSString* name = dic[@"Name"];
+    UIView *resultBoard = [[UIView alloc] initWithFrame:CGRectMake(256, -512, 512, 512)];
+    [resultBoard setBackgroundColor:[UIColor colorWithRed:0.0 green:0.25 blue:0.0 alpha:1.0]];
+    [resultBoard setOpaque:1];
+    //[resultBoard setImage: [UIImage imageNamed:@"woodBoard"]];
+    
+    UILabel *resultLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 16, 512, 48)];
+    resultLabel.text = @"Result";
+    resultLabel.textColor = [UIColor whiteColor];
+    resultLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
+    resultLabel.textAlignment = NSTextAlignmentCenter;
+    [resultBoard addSubview:resultLabel];
+    
+    UIButton *yesButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[[UIButton alloc] initWithFrame:CGRectMake(0, 448, 256, 64)];
+    yesButton.frame = CGRectMake(0, 448, 256, 64);
+    [yesButton setTitle:@"OK" forState:UIControlStateNormal];
+    [yesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    yesButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
+    [yesButton addTarget:self
+                  action:@selector(endGame:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [resultBoard addSubview:yesButton];
+    
+    UIButton *noButton = [[UIButton alloc] initWithFrame:CGRectMake(256, 448, 256, 64)];
+    [noButton setTitle:@"Damn It" forState:UIControlStateNormal];
+    [noButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    noButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:32.0];
+    [noButton addTarget:self
+                 action:@selector(endGame:)
+       forControlEvents:UIControlEventTouchUpInside];
+    [resultBoard addSubview:noButton];
+    
+    UILabel *tempPlayerLabel;
+    for (int i = 0; i < 3; ++i) {
+        tempPlayerLabel = [[UILabel alloc]initWithFrame:CGRectMake(32, 80+48*i, 448, 48)];
+        tempPlayerLabel.text = [[_playerViews objectAtIndex:i] getName];
+        tempPlayerLabel.textColor = [UIColor whiteColor];
+        tempPlayerLabel.font = [UIFont fontWithName:@"Chalkduster" size:24.0];
+        tempPlayerLabel.textAlignment = NSTextAlignmentLeft;
+        [resultBoard addSubview:tempPlayerLabel];
         
-        if ([name isEqualToString:self.name]) {
-            temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(800, 500, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
-            [temp setNameAndLife:name life:[self.playerLife[name] integerValue]];
-            [_playerViews addObject:temp];
-            [self.view addSubview:temp];
-        }
-        else
-        {
-            temp = [[TTTPlayerView alloc] initWithFrame:CGRectMake(intervalX*(otherPlayerCount+1) + PLAYER_VIEW_WIDTH*otherPlayerCount, offsetY, PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT)];
-            [temp setNameAndLife:name life:[self.playerLife[name] integerValue]];
-            [_playerViews addObject:temp];
-            [self.view addSubview:temp];
-            ++otherPlayerCount;
-        }
+        tempPlayerLabel = [[UILabel alloc]initWithFrame:CGRectMake(32, 80+48*i, 448, 48)];
+        tempPlayerLabel.text = [@([[_playerViews objectAtIndex:i] getCurrentLifeNum]) stringValue];
+        tempPlayerLabel.textColor = [UIColor whiteColor];
+        tempPlayerLabel.font = [UIFont fontWithName:@"Chalkduster" size:24.0];
+        tempPlayerLabel.textAlignment = NSTextAlignmentRight;
+        [resultBoard addSubview:tempPlayerLabel];
     }
+    
+    [self.view addSubview:resultView];
+    [self.view addSubview:resultBoard];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        [resultBoard setCenter:CGPointMake(512, 384)];
+    }];
+}
+
+- (IBAction)endGame:(UIButton *)sender {
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 //end by Roger
+
+/*
+ - (void)cardPicked:(UIButton*)button
+ {
+ 
+ }
+ */
+
+/*
+ - (void)viewDidLayoutSubviews
+ {
+ for (int i = 0; i < 12; ++i) {
+ [[_weatherCards objectAtIndex:i] setCenter:CGPointMake(72+96+64*i, 672+144)];
+ }
+ }
+ */
 
 @end

@@ -65,14 +65,12 @@
     _weatherCardBack = [[UIImageView alloc] initWithFrame:CGRectMake(4, -80, 192, 288)];
     _weatherCardBack.contentMode = UIViewContentModeScaleToFill;
     _weatherCardBack.image = [UIImage imageNamed:@"WeatherCardBack"];
-    _weatherCardBack.alpha = 0.5;
-    _weatherCardBack.hidden = YES;
+    _weatherCardBack.alpha = 0.0;
     [self addSubview:_weatherCardBack];
     
     _weatherCardFront = [[TTTWeatherCardView alloc] initWithFrame:CGRectMake(4, -80, 192, 288)];
     _weatherCardFront.contentMode = UIViewContentModeScaleToFill;
-    _weatherCardFront.alpha = 0.5;
-    _weatherCardFront.hidden = YES;
+    _weatherCardFront.alpha = 0.0;
     [self addSubview:_weatherCardFront];
 }
 
@@ -173,9 +171,10 @@
 */
 - (BOOL)loseOneLife     //check if die
 {
-    --_currentLife;
-    if(_currentLife < 0)
+    if(_currentLife <= 0)
         return NO;
+    --_currentLife;
+    
     //animation
     TTTPlayerView *temp = [_lifeImageViews objectAtIndex:_currentLife];
     
@@ -192,7 +191,7 @@
                 options:UIViewAnimationOptionCurveEaseIn
                 animations:^{
                     [temp setFrame:CGRectMake(temp.frame.origin.x + 32, temp.frame.origin.y + 32, 32, 32)];
-                    [temp setAlpha:0.1];
+                    [temp setAlpha:0.25];
                 }
                 completion:nil
             ];
@@ -257,18 +256,16 @@
 {
     _hasPlayed = hasPlayed;
     if (_hasPlayed == YES) {
-        _weatherCardBack.hidden = NO;
-        _weatherCardFront.hidden = YES;
+        [UIView animateWithDuration:0.25 animations:^{
+            [_weatherCardBack setAlpha:1.0];
+            [_weatherCardFront setAlpha:0.0];
+        }];
     }
     else {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             [_weatherCardBack setAlpha:0.0];
             [_weatherCardFront setAlpha:0.0];
         }];
-        _weatherCardBack.hidden = YES;
-        _weatherCardFront.hidden = YES;
-        [_weatherCardBack setAlpha:1.0];
-        [_weatherCardFront setAlpha:1.0];
     }
 }
 
@@ -278,16 +275,11 @@
     if (upsideDown) {
         [_weatherCardFront becomeUpsideDown];
     }
-    _weatherCardFront.alpha = 0.0;
-    _weatherCardFront.hidden = NO;
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.25];
-    _weatherCardFront.alpha = 1.0;
-    _weatherCardBack.alpha = 0.0;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.25 animations:^{
+        [_weatherCardBack setAlpha:0.0];
+        [_weatherCardFront setAlpha:1.0];
+    }];
 
-    _weatherCardBack.hidden = YES;
 }
 
 /*

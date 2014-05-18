@@ -48,7 +48,7 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     nameLabel.text = [defaults valueForKey:@"Name"];
-    roomsTableView.rowHeight = 85;
+    roomsTableView.rowHeight = 84;
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"mainBG"]]];
     
@@ -163,6 +163,7 @@
 }
 
 #pragma mark - choose, find and create
+
 - (IBAction)choosePlayerCount:(id)sender
 {
     if ([sender tag] == 0)
